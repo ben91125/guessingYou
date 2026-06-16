@@ -102,6 +102,7 @@ textarea {
   resize: vertical;
   padding: 12px;
   line-height: 1.6;
+  min-height: 112px;
 }
 
 h1,
@@ -283,7 +284,7 @@ h1 {
 }
 
 .rules-hero {
-  align-items: end;
+  align-items: center;
   justify-content: space-between;
   gap: 18px;
   margin-bottom: 14px;
@@ -291,6 +292,14 @@ h1 {
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--surface-2), transparent 4%), transparent),
     var(--surface);
+}
+
+.hero-card-art {
+  width: min(28vw, 220px);
+  min-width: 150px;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: 0 10px 24px rgba(94, 66, 43, 0.1);
 }
 
 .rules-hero h2 {
@@ -326,7 +335,6 @@ h1 {
 
 .mode-grid,
 .rules-grid,
-.answer-grid,
 .workspace-grid {
   display: grid;
   gap: 16px;
@@ -552,12 +560,6 @@ h1 {
   color: var(--brand-strong);
 }
 
-.play-card.face-to-face .answer-grid,
-.play-card.face-to-face .reveal-section,
-.play-card.face-to-face #revealBtn {
-  display: none !important;
-}
-
 .hoster-panel:not([hidden]) {
   display: block;
 }
@@ -590,18 +592,6 @@ h1 {
   line-height: 1.6;
 }
 
-.answer-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.answer-panel {
-  min-width: 0;
-  padding: 14px;
-  border: 1px solid color-mix(in srgb, var(--line), transparent 22%);
-  border-radius: var(--radius);
-  background: rgba(255, 250, 242, 0.72);
-}
-
 .panel-title {
   align-items: center;
   justify-content: space-between;
@@ -618,47 +608,20 @@ h1 {
   font-weight: 750;
 }
 
-#realAnswer.is-hidden {
-  filter: blur(7px);
-}
-
-.reveal-section {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 14px;
-  animation: revealIn 220ms ease-out;
-}
-
-.reveal-section:not([hidden]) {
-  display: grid;
-}
-
-.reveal-section div {
-  padding: 14px;
-  border-radius: var(--radius);
-  background: var(--surface);
-  border: 1px solid var(--line);
-}
-
-.reveal-section p {
-  margin: 8px 0 0;
-  white-space: pre-wrap;
-}
-
 .round-tools {
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 12px;
-  margin: 16px 0;
+  margin: 18px 0 14px;
 }
 
 .rating-group {
   display: flex;
   align-items: center;
   gap: 12px;
-  min-height: 42px;
+  min-height: 48px;
   margin: 0;
-  padding: 0 12px;
+  padding: 0 14px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: rgba(255, 253, 248, 0.86);
@@ -674,6 +637,14 @@ h1 {
 .notes-label {
   display: block;
   margin-bottom: 8px;
+}
+
+#notes {
+  background:
+    linear-gradient(transparent 31px, rgba(229, 207, 187, 0.32) 32px),
+    rgba(255, 253, 248, 0.88);
+  background-size: 100% 32px;
+  border-color: color-mix(in srgb, var(--gold), var(--line) 52%);
 }
 
 .commit-row {
@@ -857,19 +828,12 @@ h1 {
   }
 
   .score-strip,
-  .answer-grid,
   .workspace-grid,
   .mode-grid,
   .rules-grid,
   .hoster-panel dl,
-  .sync-grid,
-  .reveal-section:not([hidden]),
   .bias-preview {
     grid-template-columns: 1fr;
-  }
-
-  .sync-actions {
-    flex-direction: column;
   }
 
   .draw-row label {

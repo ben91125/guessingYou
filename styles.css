@@ -227,6 +227,12 @@ h1 {
   border: 1px solid var(--line);
 }
 
+.ghost-button.is-active {
+  background: var(--surface-3);
+  color: var(--brand-strong);
+  border-color: color-mix(in srgb, var(--brand), transparent 44%);
+}
+
 .primary-button {
   background: var(--brand);
   color: #fff;
@@ -505,6 +511,66 @@ h1 {
     var(--surface);
 }
 
+.face-sync-panel,
+.face-flow-card {
+  margin-bottom: 18px;
+  padding: 15px;
+  border: 1px solid color-mix(in srgb, var(--accent), transparent 58%);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--surface-2), transparent 18%), transparent),
+    var(--surface);
+}
+
+.face-sync-panel:not([hidden]),
+.face-flow-card:not([hidden]) {
+  display: block;
+}
+
+.face-sync-panel h3 {
+  margin: 0;
+}
+
+.face-sync-panel p,
+.face-flow-card p {
+  margin-bottom: 12px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.face-flow-card strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--brand-strong);
+}
+
+.sync-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.sync-grid label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.sync-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.play-card.face-to-face .answer-grid,
+.play-card.face-to-face .reveal-section,
+.play-card.face-to-face #revealBtn {
+  display: none !important;
+}
+
 .hoster-panel:not([hidden]) {
   display: block;
 }
@@ -655,6 +721,25 @@ h1 {
   gap: 9px;
 }
 
+.library-note {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.library-note strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--brand-strong);
+}
+
+.library-note p {
+  margin-bottom: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
 .question-list,
 .history-list {
   display: grid;
@@ -790,9 +875,14 @@ h1 {
   .mode-grid,
   .rules-grid,
   .hoster-panel dl,
+  .sync-grid,
   .reveal-section:not([hidden]),
   .bias-preview {
     grid-template-columns: 1fr;
+  }
+
+  .sync-actions {
+    flex-direction: column;
   }
 
   .draw-row label {

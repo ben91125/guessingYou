@@ -78,6 +78,9 @@ const dom = {
   favoriteCount: document.querySelector("#favoriteCount"),
   currentMeta: document.querySelector("#currentMeta"),
   questionText: document.querySelector("#questionText"),
+  playCard: document.querySelector("#playCard"),
+  faceModeToggle: document.querySelector("#faceModeToggle"),
+  faceFlowCard: document.querySelector("#faceFlowCard"),
   hosterToggle: document.querySelector("#hosterToggle"),
   hosterPanel: document.querySelector("#hosterPanel"),
   hosterStage: document.querySelector("#hosterStage"),
@@ -86,8 +89,9 @@ const dom = {
   hosterTips: document.querySelector("#hosterTips"),
   hosterWatchOut: document.querySelector("#hosterWatchOut"),
   favoriteBtn: document.querySelector("#favoriteBtn"),
+  questionNumberSelect: document.querySelector("#questionNumberSelect"),
+  goQuestionBtn: document.querySelector("#goQuestionBtn"),
   categoryFilter: document.querySelector("#categoryFilter"),
-  drawBtn: document.querySelector("#drawBtn"),
   realAnswer: document.querySelector("#realAnswer"),
   guessAnswer: document.querySelector("#guessAnswer"),
   hideAnswerToggle: document.querySelector("#hideAnswerToggle"),
@@ -98,10 +102,6 @@ const dom = {
   notes: document.querySelector("#notes"),
   saveStatus: document.querySelector("#saveStatus"),
   completeBtn: document.querySelector("#completeBtn"),
-  questionForm: document.querySelector("#questionForm"),
-  newMode: document.querySelector("#newMode"),
-  newCategory: document.querySelector("#newCategory"),
-  newQuestion: document.querySelector("#newQuestion"),
   questionTotal: document.querySelector("#questionTotal"),
   managerFilter: document.querySelector("#managerFilter"),
   questionList: document.querySelector("#questionList"),
@@ -115,7 +115,6 @@ const dom = {
 };
 
 const defaultState = {
-  customQuestions: [],
   rounds: [],
   favorites: [],
   currentQuestionId: null,
@@ -134,13 +133,18 @@ const defaultState = {
     managerFilter: ALL_OPTION,
     hideAnswer: true,
     hosterMode: false,
+    faceToFaceMode: false,
   },
 };
 
 let state = loadState();
 
 function allQuestions() {
-  return [...questionLibrary, ...state.customQuestions];
+  return questionLibrary;
+}
+
+function playableQuestions() {
+  return allQuestions().filter((question) => question.packStatus === "selected-draft");
 }
 
 function currentMode() {
@@ -223,7 +227,7 @@ function getCurrentQuestion() {
 
 function questionsForActiveMode() {
   const selectedCategory = state.settings.categoryFilter;
-  return allQuestions().filter((question) => {
+  return playableQuestions().filter((question) => {
     const matchesMode = question.mode === state.settings.activeMode;
     const matchesCategory = selectedCategory === ALL_OPTION || question.category === selectedCategory;
     return matchesMode && matchesCategory;
@@ -268,7 +272,7 @@ function completeRound() {
     return;
   }
 
-  if (!state.draft.realAnswer.trim() || !state.draft.guessAnswer.trim()) {
+  if (!state.settings.faceToFaceMode && (!state.draft.realAnswer.trim() || !state.draft.guessAnswer.trim())) {
     alert("請先填寫真實答案與猜測答案。");
     return;
   }
@@ -279,40 +283,16 @@ function completeRound() {
     questionId: question.id,
     questionText: question.text,
     category: question.category,
-    realAnswer: state.draft.realAnswer.trim(),
-    guessAnswer: state.draft.guessAnswer.trim(),
+    realAnswer: state.settings.faceToFaceMode ? "" : state.draft.realAnswer.trim(),
+    guessAnswer: state.settings.faceToFaceMode ? "面對面口頭猜測" : state.draft.guessAnswer.trim(),
     notes: state.draft.notes.trim(),
     rating: state.draft.rating,
+    playStyle: state.settings.faceToFaceMode ? "face-to-face" : "single-device",
     createdAt: new Date().toISOString(),
   });
 
   state.draft = structuredClone(defaultState.draft);
   saveState("本題已完成");
-  render();
-}
-
-function addCustomQuestion(event) {
-  event.preventDefault();
-  const text = dom.newQuestion.value.trim();
-  if (!text) return;
-
-  state.customQuestions.push({
-    id: `custom-${crypto.randomUUID()}`,
-    mode: dom.newMode.value,
-    category: dom.newCategory.value,
-    text,
-    builtIn: false,
-    hoster: {
-      purpose: "自訂題目，可依活動目的自行補充主持說明。",
-      framework: "自訂",
-      stage: "自訂流程",
-      tips: "主持人可先說明為什麼想問這一題。",
-      watchOut: "確認題目適合目前玩家熟悉度。",
-    },
-  });
-
-  dom.newQuestion.value = "";
-  saveState("已加入自訂題目");
   render();
 }
 
@@ -341,8 +321,10 @@ function render() {
   renderActiveView();
   renderModes();
   renderSelectors();
+  renderQuestionNumberSelect();
   renderQuestion();
   renderHoster();
+  renderFaceToFaceMode();
   renderDraft();
   renderReveal();
   renderStats();
@@ -387,13 +369,33 @@ function renderModes() {
 
 function renderSelectors() {
   const categoryOptions = [ALL_OPTION, ...categories].map((category) => ({ value: category, label: category }));
-  const modeOptions = modes.map((mode) => ({ value: mode.id, label: `${mode.code} ${mode.name}` }));
-  const newModeValue = dom.newMode.value || "custom";
 
   populateSelect(dom.categoryFilter, categoryOptions, state.settings.categoryFilter);
   populateSelect(dom.managerFilter, categoryOptions, state.settings.managerFilter);
-  populateSelect(dom.newCategory, categories.map((category) => ({ value: category, label: category })), dom.newCategory.value || categories[0]);
-  populateSelect(dom.newMode, modeOptions, newModeValue);
+}
+
+function renderQuestionNumberSelect() {
+  const numberedQuestions = playableQuestions().filter((question) => question.packId === "personal-starter");
+  const options = numberedQuestions.map((question, index) => ({
+    value: question.id,
+    label: `${String(index + 1).padStart(2, "0")}｜${question.level || ""}｜${question.text.replace(/\s+/g, " ").slice(0, 28)}`,
+  }));
+
+  populateSelect(dom.questionNumberSelect, options, state.currentQuestionId || options[0]?.value || "");
+}
+
+function goToSelectedQuestion() {
+  const question = playableQuestions().find((item) => item.id === dom.questionNumberSelect.value);
+  if (!question) {
+    alert("找不到這個題號。");
+    return;
+  }
+
+  state.currentQuestionId = question.id;
+  state.settings.activeMode = question.mode;
+  state.draft = structuredClone(defaultState.draft);
+  saveState("已切換題號");
+  render();
 }
 
 function renderQuestion() {
@@ -404,6 +406,14 @@ function renderQuestion() {
   dom.questionText.textContent = question ? question.text : "先選模式，再抽一張題卡。";
   dom.favoriteBtn.classList.toggle("is-active", Boolean(question && state.favorites.includes(question.id)));
   dom.favoriteBtn.textContent = question && state.favorites.includes(question.id) ? "★" : "☆";
+}
+
+function renderFaceToFaceMode() {
+  const enabled = state.settings.faceToFaceMode;
+  dom.playCard.classList.toggle("face-to-face", enabled);
+  dom.faceModeToggle.textContent = enabled ? "雙機面對面" : "同機玩法";
+  dom.faceModeToggle.classList.toggle("is-active", enabled);
+  dom.faceFlowCard.hidden = !enabled;
 }
 
 function renderHoster() {
@@ -452,12 +462,12 @@ function renderStats() {
   dom.hitRate.textContent = completed ? `${Math.round((hits / completed) * 100)}%` : "0%";
   dom.weakCategory.textContent = weakCategory;
   dom.favoriteCount.textContent = state.favorites.length;
-  dom.questionTotal.textContent = `${allQuestions().length} 題`;
+  dom.questionTotal.textContent = `${playableQuestions().length} 題`;
 }
 
 function renderQuestionList() {
   const filter = state.settings.managerFilter;
-  const questions = allQuestions().filter((question) => {
+  const questions = playableQuestions().filter((question) => {
     const sameMode = question.mode === state.settings.activeMode;
     const sameCategory = filter === ALL_OPTION || question.category === filter;
     return sameMode && sameCategory;
@@ -499,7 +509,7 @@ function renderHistory() {
     const node = dom.historyItemTemplate.content.firstElementChild.cloneNode(true);
     node.querySelector(".category-pill").textContent = `${mode?.code || "Mode"} · ${round.category}`;
     node.querySelector("h3").textContent = round.questionText;
-    node.querySelector("p").textContent = round.notes || "沒有備註";
+    node.querySelector("p").textContent = round.playStyle === "face-to-face" ? round.notes || "面對面口頭作答，僅記錄猜測評分。" : round.notes || "沒有備註";
     const score = node.querySelector("strong");
     score.textContent = round.rating === "hit" ? "猜中" : "未中";
     score.classList.toggle("is-miss", round.rating !== "hit");
@@ -565,6 +575,14 @@ function bindEvents() {
     renderHoster();
   });
 
+  dom.faceModeToggle.addEventListener("click", () => {
+    state.settings.faceToFaceMode = !state.settings.faceToFaceMode;
+    saveState(state.settings.faceToFaceMode ? "已切換為雙機面對面玩法" : "已切換為同機玩法");
+    renderFaceToFaceMode();
+  });
+
+  dom.goQuestionBtn.addEventListener("click", goToSelectedQuestion);
+
   dom.tabButtons.forEach((button) => {
     button.addEventListener("click", () => {
       state.settings.activeView = button.dataset.view;
@@ -590,11 +608,9 @@ function bindEvents() {
     saveState("已更新題庫篩選");
     renderQuestionList();
   });
-  dom.drawBtn.addEventListener("click", () => drawQuestion());
   dom.favoriteBtn.addEventListener("click", toggleFavorite);
   dom.revealBtn.addEventListener("click", revealAnswers);
   dom.completeBtn.addEventListener("click", completeRound);
-  dom.questionForm.addEventListener("submit", addCustomQuestion);
   dom.clearRoundsBtn.addEventListener("click", clearRounds);
 
   [dom.realAnswer, dom.guessAnswer, dom.notes].forEach((field) => {

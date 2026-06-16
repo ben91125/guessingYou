@@ -97,7 +97,7 @@
               </div>
             </aside>
 
-            <section class="play-card">
+            <section class="play-card" id="playCard">
               <div class="card-pattern" aria-hidden="true"></div>
               <div class="play-card-head">
                 <div>
@@ -105,16 +105,27 @@
                   <h2 id="questionText">先選模式，再抽一張題卡。</h2>
                 </div>
                 <div class="card-actions">
+                  <button class="ghost-button" id="faceModeToggle" type="button">同機玩法</button>
                   <button class="ghost-button" id="hosterToggle" type="button">HOSTER OFF</button>
                   <button class="star-button" id="favoriteBtn" type="button" aria-label="收藏題目" title="收藏題目">☆</button>
                 </div>
               </div>
 
               <div class="draw-row">
-                <label for="categoryFilter">題目分類</label>
-                <select id="categoryFilter"></select>
-                <button class="primary-button" id="drawBtn" type="button">隨機抽題</button>
+                <label for="questionNumberSelect">指定題號</label>
+                <select id="questionNumberSelect"></select>
+                <button class="primary-button" id="goQuestionBtn" type="button">前往題號</button>
               </div>
+
+              <div class="draw-row secondary-filter-row">
+                <label for="categoryFilter">輔助分類</label>
+                <select id="categoryFilter"></select>
+              </div>
+
+              <aside class="face-flow-card" id="faceFlowCard" hidden>
+                <strong>面對面玩法</strong>
+                <p>兩個人各自把網頁切到同一題號。玩家 B 先口頭猜，玩家 A 再口頭揭曉。這個裝置只記錄對方猜測是否準確、備註和收藏，不需要輸入真實答案。</p>
+              </aside>
 
               <aside class="hoster-panel" id="hosterPanel" hidden>
                 <div class="section-head">
@@ -175,14 +186,14 @@
               <div class="round-tools">
                 <button class="secondary-button" id="revealBtn" type="button">揭曉答案</button>
                 <fieldset class="rating-group">
-                  <legend>手動評分</legend>
+                  <legend>對方猜測評分</legend>
                   <label><input type="radio" name="rating" value="hit" /> 猜中</label>
                   <label><input type="radio" name="rating" value="miss" checked /> 未猜中</label>
                 </fieldset>
               </div>
 
-              <label class="notes-label" for="notes">討論備註</label>
-              <textarea id="notes" rows="4" placeholder="記下你們聊出來的有趣發現"></textarea>
+              <label class="notes-label" for="notes">評分備註</label>
+              <textarea id="notes" rows="4" placeholder="記下對方猜測哪裡準、哪裡誤會，或你們聊出來的有趣發現"></textarea>
 
               <div class="commit-row">
                 <p id="saveStatus" role="status">localStorage 自動保存中</p>
@@ -194,18 +205,13 @@
           <section class="workspace-grid">
             <article class="tool-panel">
               <div class="section-head">
-                <h2>新增自訂題目</h2>
+                <h2>題庫策略</h2>
                 <span id="questionTotal">36 題</span>
               </div>
-              <form id="questionForm" class="question-form">
-                <label for="newMode">模式</label>
-                <select id="newMode"></select>
-                <label for="newCategory">分類</label>
-                <select id="newCategory"></select>
-                <label for="newQuestion">題目</label>
-                <textarea id="newQuestion" rows="3" placeholder="例如：你覺得我最難拒絕的是什麼？" required></textarea>
-                <button class="secondary-button" type="submit">加入題庫</button>
-              </form>
+              <div class="library-note">
+                <strong>題庫由我們維護</strong>
+                <p>玩家只負責遊玩、評分與備註。預設題庫先使用已挑選題目，候選題會保留在資料檔中，未來再由我們整理成正式題包、活動題包或 HOSTER 題包。</p>
+              </div>
             </article>
 
             <article class="tool-panel">

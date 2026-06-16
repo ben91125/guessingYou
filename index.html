@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>你猜猜看</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <p class="eyebrow">溫馨桌遊式默契問答</p>
+          <h1>你猜猜看</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <nav class="view-tabs" aria-label="頁面切換">
+            <button class="tab-button is-active" data-view="rules" type="button">規則</button>
+            <button class="tab-button" data-view="game" type="button">遊戲</button>
+          </nav>
+          <button class="icon-button" id="themeToggle" type="button" aria-label="切換深色模式" title="切換深色模式">
+            <span id="themeIcon" aria-hidden="true">◐</span>
+          </button>
+          <button class="ghost-button" id="exportBtn" type="button">匯出 JSON</button>
+          <label class="ghost-button import-label" for="importFile">匯入 JSON</label>
+          <input id="importFile" type="file" accept="application/json" hidden />
+        </div>
+      </header>
+
+      <main>
+        <section class="rules-page" id="rulesPage" aria-label="規則介紹">
+          <div class="rules-hero">
+            <div>
+              <span class="soft-pill">開始前先選模式</span>
+              <h2>從輕鬆聊天到價值觀探索，讓問題剛好停在舒服的距離。</h2>
+              <p>玩家 A 寫下真實答案，玩家 B 寫下猜測。揭曉後手動評分、留下備註，也可以收藏特別有趣的題目。</p>
+            </div>
+            <button class="primary-button" id="startGameBtn" type="button">開始遊戲</button>
+          </div>
+
+          <div class="mode-grid" id="rulesModeGrid" aria-label="模式介紹"></div>
+
+          <div class="rules-grid">
+            <article>
+              <strong>1</strong>
+              <h3>選模式</h3>
+              <p>朋友、熟人、情侶、自訂題庫各有不同題目深度。</p>
+            </article>
+            <article>
+              <strong>2</strong>
+              <h3>抽題</h3>
+              <p>可以依分類抽題，也可以直接從目前模式隨機抽。</p>
+            </article>
+            <article>
+              <strong>3</strong>
+              <h3>作答與猜測</h3>
+              <p>真實答案預設模糊，避免玩家 B 偷看到。</p>
+            </article>
+            <article>
+              <strong>4</strong>
+              <h3>揭曉後聊天</h3>
+              <p>標記猜中或未中，寫下你們聊出的發現。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="game-page" id="gamePage" aria-label="遊戲主頁" hidden>
+          <section class="mode-section" aria-label="遊戲模式">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">遊戲模式</p>
+                <h2>選擇這一輪的問題深度</h2>
+              </div>
+              <span id="modeHint">Mode A 朋友模式</span>
+            </div>
+            <div class="mode-grid" id="modeGrid"></div>
+          </section>
+
+          <section class="game-board">
+            <aside class="score-strip">
+              <div class="score-card">
+                <span class="score-label">已完成</span>
+                <strong id="completedCount">0</strong>
+              </div>
+              <div class="score-card">
+                <span class="score-label">猜中率</span>
+                <strong id="hitRate">0%</strong>
+              </div>
+              <div class="score-card">
+                <span class="score-label">常猜錯</span>
+                <strong id="weakCategory">尚無</strong>
+              </div>
+              <div class="score-card">
+                <span class="score-label">收藏</span>
+                <strong id="favoriteCount">0</strong>
+              </div>
+            </aside>
+
+            <section class="play-card">
+              <div class="card-pattern" aria-hidden="true"></div>
+              <div class="play-card-head">
+                <div>
+                  <span class="category-pill" id="currentMeta">準備開始</span>
+                  <h2 id="questionText">先選模式，再抽一張題卡。</h2>
+                </div>
+                <div class="card-actions">
+                  <button class="ghost-button" id="hosterToggle" type="button">HOSTER OFF</button>
+                  <button class="star-button" id="favoriteBtn" type="button" aria-label="收藏題目" title="收藏題目">☆</button>
+                </div>
+              </div>
+
+              <div class="draw-row">
+                <label for="categoryFilter">題目分類</label>
+                <select id="categoryFilter"></select>
+                <button class="primary-button" id="drawBtn" type="button">隨機抽題</button>
+              </div>
+
+              <aside class="hoster-panel" id="hosterPanel" hidden>
+                <div class="section-head">
+                  <h3>主持人提示</h3>
+                  <span id="hosterStage">尚未抽題</span>
+                </div>
+                <dl>
+                  <div>
+                    <dt>提問目的</dt>
+                    <dd id="hosterPurpose">抽題後會顯示這題適合怎麼帶。</dd>
+                  </div>
+                  <div>
+                    <dt>使用框架</dt>
+                    <dd id="hosterFramework">可作為未來付費題包或主持腳本的內容層。</dd>
+                  </div>
+                  <div>
+                    <dt>流程提醒</dt>
+                    <dd id="hosterTips">先讓玩家 B 說猜測理由，再揭曉玩家 A 的答案。</dd>
+                  </div>
+                  <div>
+                    <dt>注意事項</dt>
+                    <dd id="hosterWatchOut">保持舒服界線，不把猜錯解讀成不在乎。</dd>
+                  </div>
+                </dl>
+              </aside>
+
+              <div class="answer-grid">
+                <article class="answer-panel">
+                  <div class="panel-title">
+                    <h3>玩家 A 真實答案</h3>
+                    <label class="toggle">
+                      <input id="hideAnswerToggle" type="checkbox" checked />
+                      <span>隱藏</span>
+                    </label>
+                  </div>
+                  <textarea id="realAnswer" rows="5" placeholder="玩家 A 在這裡輸入真實答案"></textarea>
+                </article>
+
+                <article class="answer-panel">
+                  <div class="panel-title">
+                    <h3>玩家 B 猜測答案</h3>
+                  </div>
+                  <textarea id="guessAnswer" rows="5" placeholder="玩家 B 猜猜看對方會怎麼回答"></textarea>
+                </article>
+              </div>
+
+              <div class="reveal-section" id="revealSection" hidden>
+                <div>
+                  <span class="score-label">真實答案</span>
+                  <p id="revealedReal"></p>
+                </div>
+                <div>
+                  <span class="score-label">猜測答案</span>
+                  <p id="revealedGuess"></p>
+                </div>
+              </div>
+
+              <div class="round-tools">
+                <button class="secondary-button" id="revealBtn" type="button">揭曉答案</button>
+                <fieldset class="rating-group">
+                  <legend>手動評分</legend>
+                  <label><input type="radio" name="rating" value="hit" /> 猜中</label>
+                  <label><input type="radio" name="rating" value="miss" checked /> 未猜中</label>
+                </fieldset>
+              </div>
+
+              <label class="notes-label" for="notes">討論備註</label>
+              <textarea id="notes" rows="4" placeholder="記下你們聊出來的有趣發現"></textarea>
+
+              <div class="commit-row">
+                <p id="saveStatus" role="status">localStorage 自動保存中</p>
+                <button class="primary-button" id="completeBtn" type="button">完成本題</button>
+              </div>
+            </section>
+          </section>
+
+          <section class="workspace-grid">
+            <article class="tool-panel">
+              <div class="section-head">
+                <h2>新增自訂題目</h2>
+                <span id="questionTotal">36 題</span>
+              </div>
+              <form id="questionForm" class="question-form">
+                <label for="newMode">模式</label>
+                <select id="newMode"></select>
+                <label for="newCategory">分類</label>
+                <select id="newCategory"></select>
+                <label for="newQuestion">題目</label>
+                <textarea id="newQuestion" rows="3" placeholder="例如：你覺得我最難拒絕的是什麼？" required></textarea>
+                <button class="secondary-button" type="submit">加入題庫</button>
+              </form>
+            </article>
+
+            <article class="tool-panel">
+              <div class="section-head">
+                <h2>題庫管理</h2>
+                <select id="managerFilter" aria-label="篩選題庫分類"></select>
+              </div>
+              <div class="question-list" id="questionList"></div>
+            </article>
+
+            <article class="tool-panel wide-panel">
+              <div class="section-head">
+                <h2>回合紀錄</h2>
+                <button class="danger-button" id="clearRoundsBtn" type="button">清除紀錄</button>
+              </div>
+              <div class="history-list" id="historyList"></div>
+            </article>
+
+            <article class="tool-panel future-panel">
+              <div class="section-head">
+                <h2>可變現內容層</h2>
+                <span>目前：本機 JSON 題包</span>
+              </div>
+              <div class="bias-preview">
+                <div>
+                  <span>HOSTER 提示</span>
+                  <strong id="assumedProfile">可延伸為主持腳本、活動題包、專業版題庫</strong>
+                </div>
+                <div>
+                  <span>低優先串接</span>
+                  <strong id="realProfile">Google Drive 匯出可等產品方向更明確再做</strong>
+                </div>
+              </div>
+            </article>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <template id="modeCardTemplate">
+      <button class="mode-card" type="button">
+        <span></span>
+        <strong></strong>
+        <small></small>
+        <p></p>
+      </button>
+    </template>
+
+    <template id="questionItemTemplate">
+      <div class="question-item">
+        <span class="category-pill"></span>
+        <p></p>
+        <button class="tiny-button" type="button">抽這題</button>
+      </div>
+    </template>
+
+    <template id="historyItemTemplate">
+      <div class="history-item">
+        <div>
+          <span class="category-pill"></span>
+          <h3></h3>
+          <p></p>
+        </div>
+        <strong></strong>
+      </div>
+    </template>
+
+    <script src="questions-data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

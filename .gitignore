@@ -1,0 +1,11 @@
+# Local preview logs
+*.log
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dependency folders, kept out unless the project later adopts a build step
+node_modules/

@@ -1,0 +1,563 @@
+{
+  "version": 1,
+  "packs": [
+    {
+      "id": "personal-starter",
+      "name": "個人版 36 題",
+      "license": "free",
+      "status": "selected-draft",
+      "description": "以熟悉度與提問深度分成 Lv1-Lv4 的 MVP 題包。",
+      "questions": [
+        {
+          "id": "personal-001",
+          "mode": "friends",
+          "level": "Lv1",
+          "category": "人際關係",
+          "text": "你猜猜看，我最想跟誰吃一頓飯？",
+          "hoster": {
+            "purpose": "用輕鬆題目觀察玩家重視的人、偶像或關係連結。",
+            "framework": "關係投射",
+            "stage": "暖身",
+            "tips": "可追問為什麼是那個人，以及那頓飯最想問什麼。",
+            "watchOut": "不要逼玩家說出太私密或敏感的人名。"
+          }
+        },
+        {
+          "id": "personal-002",
+          "mode": "friends",
+          "level": "Lv1",
+          "category": "人生觀",
+          "text": "你猜猜看，如果我明天財富自由，第一件事會做什麼？",
+          "hoster": {
+            "purpose": "從想像情境看出玩家最想恢復的自由。",
+            "framework": "自由想像",
+            "stage": "暖身",
+            "tips": "請玩家 B 說出猜測理由，通常比答案更好聊。",
+            "watchOut": "不要把答案導向金錢觀評判。"
+          }
+        },
+        {
+          "id": "personal-003",
+          "mode": "friends",
+          "level": "Lv1",
+          "category": "興趣嗜好",
+          "text": "你猜猜看，我人生最浪費錢的興趣是什麼？",
+          "hoster": {
+            "purpose": "用幽默方式聊投入感與快樂來源。",
+            "framework": "興趣成本",
+            "stage": "暖身",
+            "tips": "可以接著聊雖然花錢但值得的地方。",
+            "watchOut": "不要羞辱玩家的興趣。"
+          }
+        },
+        {
+          "id": "personal-004",
+          "mode": "friends",
+          "level": "Lv1",
+          "category": "消費觀",
+          "text": "你猜猜看，我最容易衝動買的是哪一類東西？",
+          "hoster": {
+            "purpose": "觀察消費觸發點與日常慾望。",
+            "framework": "衝動購買線索",
+            "stage": "暖身",
+            "tips": "可追問最近一次差點下單的是什麼。",
+            "watchOut": "避免變成消費習慣檢討。"
+          }
+        },
+        {
+          "id": "personal-005",
+          "mode": "friends",
+          "level": "Lv1",
+          "category": "生活習慣",
+          "text": "你猜猜看，我最討厭哪種天氣？",
+          "hoster": {
+            "purpose": "用低侵入題目快速進入日常偏好。",
+            "framework": "環境偏好",
+            "stage": "暖身",
+            "tips": "適合快速答題，不需要深挖。",
+            "watchOut": "保持節奏輕快。"
+          }
+        },
+        {
+          "id": "personal-006",
+          "mode": "friends",
+          "level": "Lv1",
+          "category": "生活習慣",
+          "text": "你猜猜看，我最常熬夜是因為什麼？",
+          "hoster": {
+            "purpose": "理解玩家的時間黑洞和壓力模式。",
+            "framework": "夜間行為",
+            "stage": "暖身",
+            "tips": "可追問是主動享受還是被迫拖延。",
+            "watchOut": "不要把熬夜直接講成自制力問題。"
+          }
+        },
+        {
+          "id": "personal-007",
+          "mode": "friends",
+          "level": "Lv1",
+          "category": "生活習慣",
+          "text": "你猜猜看，我手機裡最多的是什麼照片？",
+          "hoster": {
+            "purpose": "從相簿內容看出注意力與珍惜的事物。",
+            "framework": "生活紀錄線索",
+            "stage": "暖身",
+            "tips": "可以讓玩家只說類型，不必展示相簿。",
+            "watchOut": "不要要求看手機內容。"
+          }
+        },
+        {
+          "id": "personal-008",
+          "mode": "friends",
+          "level": "Lv1",
+          "category": "工作與學習",
+          "text": "你猜猜看，我最不擅長哪種事情？",
+          "hoster": {
+            "purpose": "輕度探索玩家自認弱點。",
+            "framework": "能力盲點",
+            "stage": "暖身",
+            "tips": "可用好笑口吻回答，降低防衛感。",
+            "watchOut": "不要把答案延伸成人身評價。"
+          }
+        },
+        {
+          "id": "personal-009",
+          "mode": "friends",
+          "level": "Lv1",
+          "category": "興趣嗜好",
+          "text": "你猜猜看，我人生最容易迷上的東西是什麼類型？",
+          "hoster": {
+            "purpose": "找出玩家的吸引力模式。",
+            "framework": "沉迷觸發點",
+            "stage": "暖身",
+            "tips": "可追問是人、作品、遊戲、知識還是收藏。",
+            "watchOut": "不要把迷上講成負面成癮。"
+          }
+        },
+        {
+          "id": "personal-010",
+          "mode": "friends",
+          "level": "Lv1",
+          "category": "生活習慣",
+          "text": "你猜猜看，如果放假一整天，我大概率在幹嘛？",
+          "hoster": {
+            "purpose": "理解休息方式與能量恢復模式。",
+            "framework": "休假樣貌",
+            "stage": "暖身",
+            "tips": "可追問理想版本和現實版本是否不同。",
+            "watchOut": "不要評判休息方式是否夠充實。"
+          }
+        },
+        {
+          "id": "personal-011",
+          "mode": "acquaintance",
+          "level": "Lv2",
+          "category": "人際關係",
+          "text": "你猜猜看，我最受不了哪種人？",
+          "hoster": {
+            "purpose": "從雷點看出價值觀與界線。",
+            "framework": "反感特質",
+            "stage": "個性與價值觀",
+            "tips": "請玩家描述類型，不要點名現實人物。",
+            "watchOut": "避免變成批評大會。"
+          }
+        },
+        {
+          "id": "personal-012",
+          "mode": "acquaintance",
+          "level": "Lv2",
+          "category": "人生觀",
+          "text": "你猜猜看，我其實很在意什麼？",
+          "hoster": {
+            "purpose": "驗證對方是否看見自己的核心在意點。",
+            "framework": "隱性需求",
+            "stage": "個性與價值觀",
+            "tips": "讓玩家 A 補充：我平常有表現出來嗎？",
+            "watchOut": "這題可能變深，允許短暫沉默。"
+          }
+        },
+        {
+          "id": "personal-013",
+          "mode": "acquaintance",
+          "level": "Lv2",
+          "category": "人際關係",
+          "text": "你猜猜看，我對朋友最重視什麼？",
+          "hoster": {
+            "purpose": "理解友情中的期待與信任條件。",
+            "framework": "友情價值排序",
+            "stage": "個性與價值觀",
+            "tips": "可追問是陪伴、誠實、可靠、幽默還是界線。",
+            "watchOut": "不要比較誰比較會當朋友。"
+          }
+        },
+        {
+          "id": "personal-014",
+          "mode": "acquaintance",
+          "level": "Lv2",
+          "category": "人際關係",
+          "text": "你猜猜看，我最容易因為什麼生氣？",
+          "hoster": {
+            "purpose": "找出情緒觸發點與界線。",
+            "framework": "怒氣線索",
+            "stage": "個性與價值觀",
+            "tips": "引導玩家講情境而不是指責。",
+            "watchOut": "避免現場翻舊帳。"
+          }
+        },
+        {
+          "id": "personal-015",
+          "mode": "acquaintance",
+          "level": "Lv2",
+          "category": "人生觀",
+          "text": "你猜猜看，我最大的優點是什麼？",
+          "hoster": {
+            "purpose": "透過他人眼光看見自我資源。",
+            "framework": "正向鏡映",
+            "stage": "個性與價值觀",
+            "tips": "請玩家 B 給一個具體例子。",
+            "watchOut": "不要讓回答變成客套話。"
+          }
+        },
+        {
+          "id": "personal-016",
+          "mode": "acquaintance",
+          "level": "Lv2",
+          "category": "人生觀",
+          "text": "你猜猜看，我最大的缺點是什麼？",
+          "hoster": {
+            "purpose": "在安全範圍內看見盲點。",
+            "framework": "自我盲點",
+            "stage": "個性與價值觀",
+            "tips": "建議用我猜可能是開頭，降低攻擊感。",
+            "watchOut": "主持人要避免答案變成傷害。"
+          }
+        },
+        {
+          "id": "personal-017",
+          "mode": "acquaintance",
+          "level": "Lv2",
+          "category": "人生觀",
+          "text": "你猜猜看，我最害怕變成什麼樣的人？",
+          "hoster": {
+            "purpose": "探索玩家抗拒的自我形象。",
+            "framework": "反向價值觀",
+            "stage": "個性與價值觀",
+            "tips": "可追問：那代表你很重視什麼？",
+            "watchOut": "不要逼玩家揭露過度脆弱的內容。"
+          }
+        },
+        {
+          "id": "personal-018",
+          "mode": "acquaintance",
+          "level": "Lv2",
+          "category": "消費觀",
+          "text": "你猜猜看，我對錢最真實的看法是什麼？",
+          "hoster": {
+            "purpose": "理解金錢背後的安全、自由或成就需求。",
+            "framework": "金錢信念",
+            "stage": "個性與價值觀",
+            "tips": "可讓玩家用一句話完成：錢對我來說是。",
+            "watchOut": "避免比較收入、資產或家庭背景。"
+          }
+        },
+        {
+          "id": "personal-019",
+          "mode": "acquaintance",
+          "level": "Lv2",
+          "category": "人生觀",
+          "text": "你猜猜看，我最不願意妥協的是什麼？",
+          "hoster": {
+            "purpose": "找出核心原則與底線。",
+            "framework": "不可妥協清單",
+            "stage": "個性與價值觀",
+            "tips": "可追問這個底線是怎麼形成的。",
+            "watchOut": "不要挑戰玩家的底線是否合理。"
+          }
+        },
+        {
+          "id": "personal-020",
+          "mode": "acquaintance",
+          "level": "Lv2",
+          "category": "人際關係",
+          "text": "你猜猜看，我最討厭被別人誤會什麼？",
+          "hoster": {
+            "purpose": "理解玩家最想被正確看見的部分。",
+            "framework": "被誤解的自我",
+            "stage": "個性與價值觀",
+            "tips": "玩家 B 可以補一句：我以前有沒有也這樣誤會你？",
+            "watchOut": "若氣氛變重，先回到好奇而非辯解。"
+          }
+        },
+        {
+          "id": "personal-021",
+          "mode": "acquaintance",
+          "level": "Lv3",
+          "category": "人生觀",
+          "text": "你猜猜看，我學生時代最常被老師唸什麼？",
+          "hoster": {
+            "purpose": "用故事題回看早期性格線索。",
+            "framework": "人生故事入口",
+            "stage": "人生故事",
+            "tips": "適合請玩家講一個學生時代小故事。",
+            "watchOut": "不要把過去表現定義成現在的人。"
+          }
+        },
+        {
+          "id": "personal-022",
+          "mode": "acquaintance",
+          "level": "Lv3",
+          "category": "人生觀",
+          "text": "你猜猜看，我人生最後悔的一件事是什麼類型？",
+          "hoster": {
+            "purpose": "探索遺憾類型而不要求揭露完整事件。",
+            "framework": "遺憾分類",
+            "stage": "人生故事",
+            "tips": "用類型回答即可，例如錯過、衝動、沒說出口。",
+            "watchOut": "不要追問玩家不想細講的細節。"
+          }
+        },
+        {
+          "id": "personal-023",
+          "mode": "acquaintance",
+          "level": "Lv3",
+          "category": "人生觀",
+          "text": "你猜猜看，我人生最得意的一件事是什麼？",
+          "hoster": {
+            "purpose": "讓玩家被看見自己的成就感來源。",
+            "framework": "成就故事",
+            "stage": "人生故事",
+            "tips": "玩家 B 可以說為什麼覺得那件事對玩家 A 重要。",
+            "watchOut": "不要比較成就是大是小。"
+          }
+        },
+        {
+          "id": "personal-024",
+          "mode": "acquaintance",
+          "level": "Lv3",
+          "category": "人生觀",
+          "text": "你猜猜看，我曾經做過最衝動的決定是什麼？",
+          "hoster": {
+            "purpose": "理解玩家冒險、情緒與行動模式。",
+            "framework": "衝動決策",
+            "stage": "人生故事",
+            "tips": "可追問現在回頭看覺得值得嗎。",
+            "watchOut": "若牽涉敏感經驗，允許玩家跳過。"
+          }
+        },
+        {
+          "id": "personal-025",
+          "mode": "acquaintance",
+          "level": "Lv3",
+          "category": "人際關係",
+          "text": "你猜猜看，我最感謝遇到哪一種人？",
+          "hoster": {
+            "purpose": "從感謝對象看出支持需求與人生影響。",
+            "framework": "重要他人",
+            "stage": "人生故事",
+            "tips": "答案可以是類型，不必是特定人名。",
+            "watchOut": "尊重玩家不想公開的人際故事。"
+          }
+        },
+        {
+          "id": "personal-026",
+          "mode": "acquaintance",
+          "level": "Lv3",
+          "category": "人生觀",
+          "text": "你猜猜看，我人生哪個階段變化最大？",
+          "hoster": {
+            "purpose": "找出自我轉變的關鍵時期。",
+            "framework": "生命階段",
+            "stage": "人生故事",
+            "tips": "可追問變化最大的是個性、生活還是價值觀。",
+            "watchOut": "不要要求玩家解釋所有細節。"
+          }
+        },
+        {
+          "id": "personal-027",
+          "mode": "acquaintance",
+          "level": "Lv3",
+          "category": "人生觀",
+          "text": "你猜猜看，我最希望回到幾歲？",
+          "hoster": {
+            "purpose": "從想回到的年紀理解懷念、遺憾或渴望。",
+            "framework": "時間想像",
+            "stage": "人生故事",
+            "tips": "可以問是想重來、重溫，還是提醒當時的自己。",
+            "watchOut": "不要把答案導向後悔檢討。"
+          }
+        },
+        {
+          "id": "personal-028",
+          "mode": "acquaintance",
+          "level": "Lv3",
+          "category": "人生觀",
+          "text": "你猜猜看，我人生最大的轉捩點是什麼？",
+          "hoster": {
+            "purpose": "探索玩家如何理解自己的生命敘事。",
+            "framework": "轉捩點敘事",
+            "stage": "人生故事",
+            "tips": "玩家 B 可以猜事件，也可以猜事件類型。",
+            "watchOut": "這題較深，主持人要允許跳題。"
+          }
+        },
+        {
+          "id": "personal-029",
+          "mode": "couple",
+          "level": "Lv4",
+          "category": "人生觀",
+          "text": "你猜猜看，我其實最缺乏的是什麼？",
+          "hoster": {
+            "purpose": "進入脆弱需求與自我理解。",
+            "framework": "核心缺口",
+            "stage": "進階版",
+            "tips": "建議只在彼此信任且情緒穩定時使用。",
+            "watchOut": "不要替對方診斷或下定論。"
+          }
+        },
+        {
+          "id": "personal-030",
+          "mode": "couple",
+          "level": "Lv4",
+          "category": "人生觀",
+          "text": "你猜猜看，我最怕失去什麼？",
+          "hoster": {
+            "purpose": "探索安全感、依附與核心恐懼。",
+            "framework": "失去恐懼",
+            "stage": "進階版",
+            "tips": "可先約定回答後只回應理解，不急著解決。",
+            "watchOut": "避免用答案控制對方。"
+          }
+        },
+        {
+          "id": "personal-031",
+          "mode": "couple",
+          "level": "Lv4",
+          "category": "人生觀",
+          "text": "你猜猜看，如果我只剩一年，我第一個放棄的是什麼？",
+          "hoster": {
+            "purpose": "透過極端情境看出優先順序。",
+            "framework": "生命優先級",
+            "stage": "進階版",
+            "tips": "可以追問放棄後想把時間留給什麼。",
+            "watchOut": "題目較重，氣氛不合適時跳過。"
+          }
+        },
+        {
+          "id": "personal-032",
+          "mode": "couple",
+          "level": "Lv4",
+          "category": "人生觀",
+          "text": "你猜猜看，我最想彌補的遺憾是什麼類型？",
+          "hoster": {
+            "purpose": "理解玩家對修復與未完成事件的想像。",
+            "framework": "遺憾修復",
+            "stage": "進階版",
+            "tips": "回答類型即可，不必揭露完整故事。",
+            "watchOut": "不要逼玩家承諾立刻彌補。"
+          }
+        },
+        {
+          "id": "personal-033",
+          "mode": "couple",
+          "level": "Lv4",
+          "category": "人生觀",
+          "text": "你猜猜看，我最大的心魔是什麼？",
+          "hoster": {
+            "purpose": "探索深層阻礙和自我拉扯。",
+            "framework": "內在阻力",
+            "stage": "進階版",
+            "tips": "主持人可提醒：這不是心理診斷，只是自我描述。",
+            "watchOut": "若玩家不舒服，立即跳題。"
+          }
+        },
+        {
+          "id": "personal-034",
+          "mode": "couple",
+          "level": "Lv4",
+          "category": "人生觀",
+          "text": "你猜猜看，我最希望別人怎麼記得我？",
+          "hoster": {
+            "purpose": "談被看見、遺產感與自我定位。",
+            "framework": "被記得的自我",
+            "stage": "進階版",
+            "tips": "適合讓玩家 B 回應自己已經看見對方的哪一點。",
+            "watchOut": "避免把答案變成成就壓力。"
+          }
+        },
+        {
+          "id": "personal-035",
+          "mode": "couple",
+          "level": "Lv4",
+          "category": "人生觀",
+          "text": "你猜猜看，我十年後最有可能變成什麼樣子？",
+          "hoster": {
+            "purpose": "比較對方眼中的未來自己和自我想像。",
+            "framework": "未來自我",
+            "stage": "進階版",
+            "tips": "可分成最可能、最希望、最不希望三個版本。",
+            "watchOut": "不要把猜測變成命運宣判。"
+          }
+        },
+        {
+          "id": "personal-036",
+          "mode": "couple",
+          "level": "Lv4",
+          "category": "人際關係",
+          "text": "你猜猜看。\n\n你對我的印象裡，\n\n哪一件事情其實完全猜錯了？",
+          "hoster": {
+            "purpose": "終極校準彼此認知，讓誤會有機會被溫柔修正。",
+            "framework": "認知落差揭露",
+            "stage": "終極題",
+            "tips": "先讓玩家 B 回答，再讓玩家 A 選一件最想修正的印象。",
+            "watchOut": "務必保持善意，不把這題用來清算對方。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "candidate-general",
+      "name": "通用候選題庫",
+      "license": "free",
+      "status": "candidate",
+      "description": "先前產生的通用題目先保留為候選池，未來再挑選是否進入預設題庫。",
+      "questions": [
+        { "id": "candidate-001", "mode": "friends", "category": "生活習慣", "text": "如果今天突然多出兩小時空檔，你覺得我最可能拿來做什麼？" },
+        { "id": "candidate-002", "mode": "friends", "category": "興趣嗜好", "text": "我最近最容易被哪一類影片、文章或話題吸引？" },
+        { "id": "candidate-003", "mode": "friends", "category": "消費觀", "text": "我最願意花小錢提升生活品質的是什麼？" },
+        { "id": "candidate-004", "mode": "friends", "category": "人際關係", "text": "我不熟的人做什麼會讓我比較快放下戒心？" },
+        { "id": "candidate-005", "mode": "friends", "category": "工作與學習", "text": "我做事比較像先規劃再開始，還是邊做邊修？" },
+        { "id": "candidate-006", "mode": "friends", "category": "生活習慣", "text": "我壓力大時最容易出現哪個小習慣？" },
+        { "id": "candidate-007", "mode": "friends", "category": "興趣嗜好", "text": "如果週末只能選一種活動，我會選室內還是戶外？" },
+        { "id": "candidate-008", "mode": "friends", "category": "人生觀", "text": "如果人生是一款遊戲，我現在最想升級哪個能力值？" },
+        { "id": "candidate-009", "mode": "friends", "category": "消費觀", "text": "我最近一次覺得買得很值得的東西可能是什麼？" },
+        { "id": "candidate-010", "mode": "acquaintance", "category": "工作與學習", "text": "我遇到困難時，最希望別人給我哪一種支援？" },
+        { "id": "candidate-011", "mode": "acquaintance", "category": "人際關係", "text": "我遇到衝突時比較會沉默、解釋，還是轉移話題？" },
+        { "id": "candidate-012", "mode": "acquaintance", "category": "生活習慣", "text": "我最不能忍受生活中哪一種混亂？" },
+        { "id": "candidate-013", "mode": "acquaintance", "category": "興趣嗜好", "text": "哪一件事會讓我忘記時間？" },
+        { "id": "candidate-014", "mode": "acquaintance", "category": "消費觀", "text": "我買東西時最容易被哪種理由說服？" },
+        { "id": "candidate-015", "mode": "acquaintance", "category": "人生觀", "text": "我現在最想把生活調整成什麼樣子？" },
+        { "id": "candidate-016", "mode": "acquaintance", "category": "人際關係", "text": "我什麼時候會覺得自己真的被理解？" },
+        { "id": "candidate-017", "mode": "acquaintance", "category": "工作與學習", "text": "我最怕遇到哪一種合作方式？" },
+        { "id": "candidate-018", "mode": "acquaintance", "category": "人生觀", "text": "我最害怕把時間浪費在哪一件事上？" },
+        { "id": "candidate-019", "mode": "couple", "category": "愛情觀", "text": "我覺得一段關係裡最重要的安全感來自什麼？" },
+        { "id": "candidate-020", "mode": "couple", "category": "愛情觀", "text": "我比較在意儀式感、陪伴時間，還是實際行動？" },
+        { "id": "candidate-021", "mode": "couple", "category": "愛情觀", "text": "吵架後，我最希望對方先做什麼？" },
+        { "id": "candidate-022", "mode": "couple", "category": "人際關係", "text": "我最不擅長拒絕哪一種請求？" },
+        { "id": "candidate-023", "mode": "couple", "category": "人生觀", "text": "我希望五年後的自己保留現在的哪一點？" },
+        { "id": "candidate-024", "mode": "couple", "category": "消費觀", "text": "如果突然得到一筆獎金，我第一個想怎麼用？" },
+        { "id": "candidate-025", "mode": "couple", "category": "愛情觀", "text": "我理想中的約會最不可缺少的是什麼？" },
+        { "id": "candidate-026", "mode": "couple", "category": "人生觀", "text": "我認為真正的自由比較接近什麼狀態？" },
+        { "id": "candidate-027", "mode": "couple", "category": "愛情觀", "text": "我最容易被哪一種貼心打動？" },
+        { "id": "candidate-028", "mode": "friends", "category": "生活習慣", "text": "我早上醒來後第一個固定動作可能是什麼？" },
+        { "id": "candidate-029", "mode": "friends", "category": "興趣嗜好", "text": "我最冷門、但自己很喜歡的小喜好是什麼？" },
+        { "id": "candidate-030", "mode": "acquaintance", "category": "工作與學習", "text": "我在學新東西時最常卡住的點是什麼？" },
+        { "id": "candidate-031", "mode": "acquaintance", "category": "消費觀", "text": "我會為了省錢犧牲便利嗎？大概到什麼程度？" },
+        { "id": "candidate-032", "mode": "couple", "category": "愛情觀", "text": "我在關係裡最需要被提醒或被照顧的是什麼？" },
+        { "id": "candidate-033", "mode": "couple", "category": "人生觀", "text": "我希望別人記得我哪一種樣子？" },
+        { "id": "candidate-034", "mode": "friends", "category": "工作與學習", "text": "如果可以立刻升級一項能力，我會選什麼？" },
+        { "id": "candidate-035", "mode": "acquaintance", "category": "人際關係", "text": "我最欣賞朋友身上的哪一種特質？" },
+        { "id": "candidate-036", "mode": "couple", "category": "消費觀", "text": "我覺得共同花錢最需要先講清楚的是什麼？" }
+      ]
+    }
+  ]
+}

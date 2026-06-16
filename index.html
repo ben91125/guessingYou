@@ -33,9 +33,10 @@
           <div class="rules-hero">
             <div>
               <span class="soft-pill">開始前先選模式</span>
-              <h2>從輕鬆聊天到價值觀探索，讓問題剛好停在舒服的距離。</h2>
-              <p>玩家 A 寫下真實答案，玩家 B 寫下猜測。揭曉後手動評分、留下備註，也可以收藏特別有趣的題目。</p>
+              <h2>把題卡放到桌上，猜猜對方心裡真正的答案。</h2>
+              <p>這個網頁只是桌遊工具：列出題目、切到指定題號、留下對方猜測的評語。答案和笑聲都留在面對面的聊天裡。</p>
             </div>
+            <img class="hero-card-art" src="assets/table-cards.svg" alt="" />
             <button class="primary-button" id="startGameBtn" type="button">開始遊戲</button>
           </div>
 
@@ -45,22 +46,22 @@
             <article>
               <strong>1</strong>
               <h3>選模式</h3>
-              <p>朋友、熟人、情侶、自訂題庫各有不同題目深度。</p>
+              <p>先依照彼此熟悉度，決定今天要玩多深。</p>
             </article>
             <article>
               <strong>2</strong>
-              <h3>抽題</h3>
-              <p>可以依分類抽題，也可以直接從目前模式隨機抽。</p>
+              <h3>對題號</h3>
+              <p>兩個人各自把手機切到同一題號，像翻到同一張題卡。</p>
             </article>
             <article>
               <strong>3</strong>
-              <h3>作答與猜測</h3>
-              <p>真實答案預設模糊，避免玩家 B 偷看到。</p>
+              <h3>口頭猜</h3>
+              <p>一個人猜，另一個人揭曉。不要打字，專心看對方反應。</p>
             </article>
             <article>
               <strong>4</strong>
-              <h3>揭曉後聊天</h3>
-              <p>標記猜中或未中，寫下你們聊出的發現。</p>
+              <h3>留評語</h3>
+              <p>記下對方猜得準不準、哪裡誤會、哪裡好笑。</p>
             </article>
           </div>
         </section>
@@ -83,18 +84,6 @@
                 <span class="score-label">已完成</span>
                 <strong id="completedCount">0</strong>
               </div>
-              <div class="score-card">
-                <span class="score-label">猜中率</span>
-                <strong id="hitRate">0%</strong>
-              </div>
-              <div class="score-card">
-                <span class="score-label">常猜錯</span>
-                <strong id="weakCategory">尚無</strong>
-              </div>
-              <div class="score-card">
-                <span class="score-label">收藏</span>
-                <strong id="favoriteCount">0</strong>
-              </div>
             </aside>
 
             <section class="play-card" id="playCard">
@@ -105,7 +94,6 @@
                   <h2 id="questionText">先選模式，再抽一張題卡。</h2>
                 </div>
                 <div class="card-actions">
-                  <button class="ghost-button" id="faceModeToggle" type="button">同機玩法</button>
                   <button class="ghost-button" id="hosterToggle" type="button">HOSTER OFF</button>
                   <button class="star-button" id="favoriteBtn" type="button" aria-label="收藏題目" title="收藏題目">☆</button>
                 </div>
@@ -114,16 +102,10 @@
               <div class="draw-row">
                 <label for="questionNumberSelect">指定題號</label>
                 <select id="questionNumberSelect"></select>
-                <button class="primary-button" id="goQuestionBtn" type="button">前往題號</button>
               </div>
 
-              <div class="draw-row secondary-filter-row">
-                <label for="categoryFilter">輔助分類</label>
-                <select id="categoryFilter"></select>
-              </div>
-
-              <aside class="face-flow-card" id="faceFlowCard" hidden>
-                <strong>面對面玩法</strong>
+              <aside class="face-flow-card" id="faceFlowCard">
+                <strong>桌遊輔助道具</strong>
                 <p>兩個人各自把網頁切到同一題號。玩家 B 先口頭猜，玩家 A 再口頭揭曉。這個裝置只記錄對方猜測是否準確、備註和收藏，不需要輸入真實答案。</p>
               </aside>
 
@@ -152,39 +134,7 @@
                 </dl>
               </aside>
 
-              <div class="answer-grid">
-                <article class="answer-panel">
-                  <div class="panel-title">
-                    <h3>玩家 A 真實答案</h3>
-                    <label class="toggle">
-                      <input id="hideAnswerToggle" type="checkbox" checked />
-                      <span>隱藏</span>
-                    </label>
-                  </div>
-                  <textarea id="realAnswer" rows="5" placeholder="玩家 A 在這裡輸入真實答案"></textarea>
-                </article>
-
-                <article class="answer-panel">
-                  <div class="panel-title">
-                    <h3>玩家 B 猜測答案</h3>
-                  </div>
-                  <textarea id="guessAnswer" rows="5" placeholder="玩家 B 猜猜看對方會怎麼回答"></textarea>
-                </article>
-              </div>
-
-              <div class="reveal-section" id="revealSection" hidden>
-                <div>
-                  <span class="score-label">真實答案</span>
-                  <p id="revealedReal"></p>
-                </div>
-                <div>
-                  <span class="score-label">猜測答案</span>
-                  <p id="revealedGuess"></p>
-                </div>
-              </div>
-
               <div class="round-tools">
-                <button class="secondary-button" id="revealBtn" type="button">揭曉答案</button>
                 <fieldset class="rating-group">
                   <legend>對方猜測評分</legend>
                   <label><input type="radio" name="rating" value="hit" /> 猜中</label>
@@ -192,59 +142,23 @@
                 </fieldset>
               </div>
 
-              <label class="notes-label" for="notes">評分備註</label>
-              <textarea id="notes" rows="4" placeholder="記下對方猜測哪裡準、哪裡誤會，或你們聊出來的有趣發現"></textarea>
+              <label class="notes-label" for="notes">給對方猜測的評語</label>
+              <textarea id="notes" rows="4" placeholder="例如：你猜到我很在意這件事，但完全猜錯原因。"></textarea>
 
               <div class="commit-row">
                 <p id="saveStatus" role="status">localStorage 自動保存中</p>
-                <button class="primary-button" id="completeBtn" type="button">完成本題</button>
+                <button class="primary-button" id="completeBtn" type="button">留下評語</button>
               </div>
             </section>
           </section>
 
-          <section class="workspace-grid">
-            <article class="tool-panel">
-              <div class="section-head">
-                <h2>題庫策略</h2>
-                <span id="questionTotal">36 題</span>
-              </div>
-              <div class="library-note">
-                <strong>題庫由我們維護</strong>
-                <p>玩家只負責遊玩、評分與備註。預設題庫先使用已挑選題目，候選題會保留在資料檔中，未來再由我們整理成正式題包、活動題包或 HOSTER 題包。</p>
-              </div>
-            </article>
-
-            <article class="tool-panel">
-              <div class="section-head">
-                <h2>題庫管理</h2>
-                <select id="managerFilter" aria-label="篩選題庫分類"></select>
-              </div>
-              <div class="question-list" id="questionList"></div>
-            </article>
-
+          <section class="workspace-grid compact-workspace">
             <article class="tool-panel wide-panel">
               <div class="section-head">
-                <h2>回合紀錄</h2>
+                <h2>評語紀錄</h2>
                 <button class="danger-button" id="clearRoundsBtn" type="button">清除紀錄</button>
               </div>
               <div class="history-list" id="historyList"></div>
-            </article>
-
-            <article class="tool-panel future-panel">
-              <div class="section-head">
-                <h2>可變現內容層</h2>
-                <span>目前：本機 JSON 題包</span>
-              </div>
-              <div class="bias-preview">
-                <div>
-                  <span>HOSTER 提示</span>
-                  <strong id="assumedProfile">可延伸為主持腳本、活動題包、專業版題庫</strong>
-                </div>
-                <div>
-                  <span>低優先串接</span>
-                  <strong id="realProfile">Google Drive 匯出可等產品方向更明確再做</strong>
-                </div>
-              </div>
             </article>
           </section>
         </section>

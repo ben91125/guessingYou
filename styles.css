@@ -1,19 +1,19 @@
 :root {
   color-scheme: light;
-  --bg: #fff8f1;
-  --surface: #fffdf9;
-  --surface-2: #fff0e6;
-  --surface-3: #eef8f2;
-  --text: #2a2420;
-  --muted: #76695e;
-  --line: #ecd9c8;
-  --brand: #639a8d;
-  --brand-strong: #2f6d63;
-  --accent: #e99386;
-  --gold: #efc96f;
-  --green: #6fa77b;
-  --danger: #c85d58;
-  --shadow: 0 18px 42px rgba(109, 77, 48, 0.12);
+  --bg: #fbf4ea;
+  --surface: #fffaf2;
+  --surface-2: #f7eadc;
+  --surface-3: #e8f2e8;
+  --text: #2d2520;
+  --muted: #77685d;
+  --line: #e5cfbb;
+  --brand: #5b9385;
+  --brand-strong: #2c6b60;
+  --accent: #d98273;
+  --gold: #e8bf56;
+  --green: #638f6d;
+  --danger: #bd5b55;
+  --shadow: 0 12px 28px rgba(94, 66, 43, 0.12);
   --radius: 8px;
 }
 
@@ -43,8 +43,8 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    linear-gradient(135deg, rgba(255, 228, 215, 0.88), transparent 38%),
-    radial-gradient(circle at top right, rgba(232, 247, 239, 0.92), transparent 34%),
+    linear-gradient(135deg, rgba(255, 224, 207, 0.62), transparent 34%),
+    radial-gradient(circle at top right, rgba(226, 243, 229, 0.78), transparent 32%),
     var(--bg);
   color: var(--text);
   font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
@@ -113,14 +113,15 @@ p {
 
 h1 {
   margin-bottom: 0;
-  font-size: clamp(2rem, 5vw, 4.2rem);
-  line-height: 0.95;
+  font-size: clamp(2.1rem, 4vw, 3.35rem);
+  line-height: 1;
+  letter-spacing: 0;
 }
 
 .app-shell {
-  width: min(1180px, calc(100% - 32px));
+  width: min(1120px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 24px 0 48px;
+  padding: 18px 0 42px;
 }
 
 .topbar,
@@ -140,7 +141,7 @@ h1 {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 22px;
+  margin-bottom: 16px;
 }
 
 .brand-block {
@@ -162,7 +163,8 @@ h1 {
 }
 
 .eyebrow {
-  margin: 0 0 4px;
+  margin: 0 0 5px;
+  color: var(--brand-strong);
 }
 
 .topbar-actions {
@@ -178,7 +180,7 @@ h1 {
   padding: 4px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: color-mix(in srgb, var(--surface), transparent 10%);
+  background: rgba(255, 250, 242, 0.78);
 }
 
 .tab-button {
@@ -190,9 +192,9 @@ h1 {
 }
 
 .tab-button.is-active {
-  background: var(--surface-2);
+  background: #fff;
   color: var(--text);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent), transparent 66%);
+  box-shadow: 0 2px 8px rgba(94, 66, 43, 0.1);
 }
 
 .icon-button,
@@ -222,7 +224,7 @@ h1 {
 
 .ghost-button,
 .import-label {
-  background: var(--surface);
+  background: rgba(255, 250, 242, 0.82);
   color: var(--text);
   border: 1px solid var(--line);
 }
@@ -236,7 +238,7 @@ h1 {
 .primary-button {
   background: var(--brand);
   color: #fff;
-  box-shadow: 0 10px 20px rgba(47, 109, 99, 0.2);
+  box-shadow: 0 8px 16px rgba(47, 109, 99, 0.18);
 }
 
 .secondary-button {
@@ -275,7 +277,7 @@ h1 {
 .tool-panel,
 .rules-grid article {
   border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--surface), transparent 4%);
+  background: rgba(255, 250, 242, 0.92);
   box-shadow: var(--shadow);
   border-radius: var(--radius);
 }
@@ -284,8 +286,8 @@ h1 {
   align-items: end;
   justify-content: space-between;
   gap: 18px;
-  margin-bottom: 16px;
-  padding: 22px;
+  margin-bottom: 14px;
+  padding: 20px;
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--surface-2), transparent 4%), transparent),
     var(--surface);
@@ -294,7 +296,7 @@ h1 {
 .rules-hero h2 {
   max-width: 790px;
   margin: 10px 0 10px;
-  font-size: clamp(1.45rem, 3vw, 2.6rem);
+  font-size: clamp(1.35rem, 2.5vw, 2.15rem);
   line-height: 1.2;
 }
 
@@ -318,8 +320,8 @@ h1 {
 }
 
 .mode-section {
-  padding: 18px;
-  margin-bottom: 16px;
+  padding: 16px;
+  margin-bottom: 14px;
 }
 
 .mode-grid,
@@ -332,41 +334,46 @@ h1 {
 
 .mode-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .mode-card {
-  min-height: 168px;
+  min-height: 136px;
   display: grid;
   align-content: start;
-  gap: 7px;
-  padding: 15px;
+  gap: 6px;
+  padding: 14px;
   text-align: left;
-  background: var(--surface);
+  background: rgba(255, 253, 248, 0.78);
   color: var(--text);
   border: 1px solid var(--line);
+  box-shadow: none;
 }
 
 .mode-card strong {
-  font-size: 1.12rem;
+  font-size: 1.04rem;
 }
 
 .mode-card small {
   color: var(--brand-strong);
-  font-weight: 900;
+  font-size: 0.8rem;
+  font-weight: 850;
+  line-height: 1.45;
 }
 
 .mode-card p {
   margin-bottom: 0;
   color: var(--muted);
+  font-size: 0.92rem;
   line-height: 1.55;
 }
 
 .mode-card.is-active {
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--surface-3), transparent 12%), transparent),
-    var(--surface);
+  background: linear-gradient(135deg, rgba(232, 242, 232, 0.78), rgba(255, 250, 242, 0.92));
   border-color: color-mix(in srgb, var(--brand), transparent 24%);
-  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--brand), transparent 60%);
+  box-shadow:
+    inset 4px 0 0 var(--brand),
+    0 8px 18px rgba(47, 109, 99, 0.08);
 }
 
 .rules-grid {
@@ -404,7 +411,7 @@ h1 {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .section-head h2,
@@ -415,25 +422,26 @@ h1 {
 
 .game-board {
   align-items: stretch;
-  gap: 16px;
+  gap: 14px;
 }
 
 .score-strip {
-  width: 168px;
+  width: 148px;
   display: grid;
-  gap: 10px;
+  gap: 8px;
   align-content: start;
 }
 
 .score-card {
-  min-height: 86px;
-  padding: 14px;
+  min-height: 76px;
+  padding: 12px;
+  background: rgba(255, 253, 248, 0.9);
 }
 
 .score-card strong {
   display: block;
-  margin-top: 6px;
-  font-size: 1.45rem;
+  margin-top: 5px;
+  font-size: 1.28rem;
   line-height: 1.15;
   word-break: break-word;
 }
@@ -442,19 +450,22 @@ h1 {
   position: relative;
   flex: 1;
   overflow: hidden;
-  padding: 22px;
+  padding: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.96), rgba(255, 247, 238, 0.96)),
+    var(--surface);
 }
 
 .card-pattern {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.14;
+  opacity: 0.08;
   background-image:
-    linear-gradient(45deg, transparent 47%, var(--brand) 48%, var(--brand) 52%, transparent 53%),
-    linear-gradient(-45deg, transparent 47%, var(--accent) 48%, var(--accent) 52%, transparent 53%);
-  background-size: 42px 42px;
-  mask-image: linear-gradient(90deg, transparent, black 22%, transparent 85%);
+    linear-gradient(90deg, var(--line) 1px, transparent 1px),
+    linear-gradient(0deg, var(--line) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(90deg, transparent, black 18%, transparent 92%);
 }
 
 .play-card > *:not(.card-pattern) {
@@ -475,10 +486,10 @@ h1 {
 }
 
 .play-card h2 {
-  margin: 10px 0 0;
+  margin: 12px 0 0;
   max-width: 820px;
-  font-size: clamp(1.45rem, 3vw, 2.55rem);
-  line-height: 1.2;
+  font-size: clamp(1.55rem, 2.7vw, 2.18rem);
+  line-height: 1.28;
 }
 
 .star-button {
@@ -493,7 +504,13 @@ h1 {
 .draw-row {
   align-items: end;
   gap: 10px;
-  margin: 22px 0;
+  margin: 18px 0 10px;
+}
+
+.secondary-filter-row {
+  margin-top: 0;
+  margin-bottom: 18px;
+  opacity: 0.9;
 }
 
 .draw-row label {
@@ -511,29 +528,20 @@ h1 {
     var(--surface);
 }
 
-.face-sync-panel,
 .face-flow-card {
-  margin-bottom: 18px;
-  padding: 15px;
-  border: 1px solid color-mix(in srgb, var(--accent), transparent 58%);
+  margin-bottom: 16px;
+  padding: 13px 14px;
+  border: 1px solid color-mix(in srgb, var(--brand), transparent 58%);
   border-radius: var(--radius);
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--surface-2), transparent 18%), transparent),
-    var(--surface);
+  background: rgba(232, 242, 232, 0.6);
 }
 
-.face-sync-panel:not([hidden]),
 .face-flow-card:not([hidden]) {
   display: block;
 }
 
-.face-sync-panel h3 {
-  margin: 0;
-}
-
-.face-sync-panel p,
 .face-flow-card p {
-  margin-bottom: 12px;
+  margin-bottom: 0;
   color: var(--muted);
   line-height: 1.65;
 }
@@ -542,27 +550,6 @@ h1 {
   display: block;
   margin-bottom: 6px;
   color: var(--brand-strong);
-}
-
-.sync-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.sync-grid label {
-  display: block;
-  margin-bottom: 6px;
-  color: var(--muted);
-  font-size: 0.82rem;
-  font-weight: 800;
-}
-
-.sync-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 12px;
 }
 
 .play-card.face-to-face .answer-grid,
@@ -610,9 +597,9 @@ h1 {
 .answer-panel {
   min-width: 0;
   padding: 14px;
-  border: 1px dashed var(--line);
+  border: 1px solid color-mix(in srgb, var(--line), transparent 22%);
   border-radius: var(--radius);
-  background: color-mix(in srgb, var(--surface-2), transparent 34%);
+  background: rgba(255, 250, 242, 0.72);
 }
 
 .panel-title {
@@ -674,7 +661,7 @@ h1 {
   padding: 0 12px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: var(--surface);
+  background: rgba(255, 253, 248, 0.86);
 }
 
 .rating-group label {
@@ -704,7 +691,7 @@ h1 {
 
 .workspace-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-top: 16px;
+  margin-top: 14px;
 }
 
 .tool-panel {
@@ -754,7 +741,7 @@ h1 {
 .bias-preview {
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: var(--surface-2);
+  background: rgba(255, 250, 242, 0.78);
 }
 
 .question-item {

@@ -445,9 +445,11 @@ function renderTopics() {
 }
 
 function switchMode(modeId) {
+  const preferredTopic = state.settings.activeTopic;
   state.settings.activeMode = modeId;
-  const firstTopic = topicsForMode(modeId)[0];
-  state.settings.activeTopic = firstTopic?.id || "";
+  const availableTopics = topicsForMode(modeId);
+  const matchingTopic = availableTopics.find((topic) => topic.id === preferredTopic);
+  state.settings.activeTopic = matchingTopic?.id || availableTopics[0]?.id || "";
   const firstQuestion = questionsForMode(modeId, state.settings.activeTopic)[0];
   state.currentQuestionId = firstQuestion?.id || null;
   state.draft = firstQuestion ? draftForQuestion(firstQuestion.id) : structuredClone(defaultState.draft);

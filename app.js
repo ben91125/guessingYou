@@ -316,8 +316,20 @@ function setQuestion(questionId) {
   render();
 }
 
+function normalizePartnerName(value) {
+  return String(value || "").trim();
+}
+
+function currentPartnerName() {
+  return normalizePartnerName(state.session.partnerName);
+}
+
+function isSameRecordedRound(round, questionId, partnerName = currentPartnerName()) {
+  return round.questionId === questionId && normalizePartnerName(round.partnerName) === partnerName;
+}
+
 function draftForQuestion(questionId) {
-  const existing = state.rounds.find((round) => round.questionId === questionId);
+  const existing = state.rounds.find((round) => isSameRecordedRound(round, questionId));
   if (!existing) return structuredClone(defaultState.draft);
   return {
     notes: existing.notes || "",
@@ -332,9 +344,10 @@ function completeRound() {
     return;
   }
 
+  const partnerName = currentPartnerName();
   const nextRound = {
     id: crypto.randomUUID(),
-    partnerName: state.session.partnerName.trim(),
+    partnerName,
     mode: question.mode,
     questionId: question.id,
     questionNumber: question.numberLabel || question.number,
@@ -349,7 +362,7 @@ function completeRound() {
     updatedAt: new Date().toISOString(),
   };
 
-  const existingIndex = state.rounds.findIndex((round) => round.questionId === question.id);
+  const existingIndex = state.rounds.findIndex((round) => isSameRecordedRound(round, question.id, partnerName));
   if (existingIndex >= 0) {
     nextRound.id = state.rounds[existingIndex].id;
     nextRound.createdAt = state.rounds[existingIndex].createdAt;
@@ -518,10 +531,9 @@ function renderStats() {
 
 function renderHistory() {
   dom.historyList.innerHTML = "";
-  const partner = state.session.partnerName.trim();
   const count = state.rounds.length;
-  const partnerCount = new Set(state.rounds.map((round) => round.partnerName || "未命名對象")).size;
-  const titlePartner = partnerCount > 1 ? `${partnerCount} 位對象` : partner || "未命名對象";
+  const groupedRounds = groupRoundsByPartner(state.rounds);
+  const titlePartner = groupedRounds.length > 1 ? `${groupedRounds.length} 位對象` : groupedRounds[0]?.partnerName || "未命名對象";
   dom.historyTitle.textContent = count ? `評語紀錄：${titlePartner}（${count}）` : "評語紀錄（0）";
   dom.toggleHistoryBtn.hidden = !count;
   dom.clearRoundsBtn.hidden = !count;
@@ -537,7 +549,7 @@ function renderHistory() {
     return;
   }
 
-  groupRoundsByPartner(state.rounds).forEach((group) => {
+  groupedRounds.forEach((group) => {
     const groupNode = document.createElement("section");
     groupNode.className = "history-group";
     const heading = document.createElement("h3");
@@ -562,7 +574,7 @@ function renderHistory() {
 function groupRoundsByPartner(rounds) {
   const groups = new Map();
   rounds.forEach((round) => {
-    const partnerName = round.partnerName || "未命名對象";
+    const partnerName = normalizePartnerName(round.partnerName) || "未命名對象";
     if (!groups.has(partnerName)) groups.set(partnerName, []);
     groups.get(partnerName).push(round);
   });

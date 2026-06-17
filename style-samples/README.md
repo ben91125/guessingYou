@@ -5,7 +5,8 @@
 它和 `prototypes/` 不同：
 
 - `prototypes/`：偏版型探索，可讓設計協作者重新設計。
-- `samples/`：偏目前產品已有風格的展示，可拿去說明商品氣氛。
+- `style-samples/`：偏目前產品已有風格的展示，可拿去說明商品氣氛。
+- `product-samples/`：偏真實產品 UI 層級，適合 Sales 展示實際操作畫面。
 
 ## 檔案
 

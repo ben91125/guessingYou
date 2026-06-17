@@ -1,0 +1,65 @@
+body.product-sample {
+  min-height: 100vh;
+}
+
+.product-sample .brand-block h1 {
+  max-width: 9em;
+}
+
+.product-sample .mode-section {
+  margin-bottom: 14px;
+}
+
+.product-sample .mode-grid {
+  margin-top: 14px;
+}
+
+.product-mode-art {
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 34% 28%, color-mix(in srgb, var(--gold), white 24%) 0 10px, transparent 11px),
+    color-mix(in srgb, var(--surface-3), white 18%);
+  color: var(--brand-strong);
+  font-weight: 900;
+}
+
+.product-sample .product-disclaimer {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface), transparent 12%);
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.product-sample .history-list {
+  display: grid;
+  gap: 10px;
+}
+
+.product-sample .commit-row {
+  margin-top: 18px;
+}
+
+.product-sample .sample-only-note {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 720px) {
+  .product-sample .topbar-actions {
+    width: 100%;
+  }
+
+  .product-sample .topbar-actions > * {
+    flex: 1 1 auto;
+  }
+}

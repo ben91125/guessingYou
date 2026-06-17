@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Product Sample 2</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="product-sample" data-style="party">
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <p class="eyebrow">匿名產品 UI Sample</p>
+          <h1>互動題卡工具</h1>
+        </div>
+        <div class="topbar-actions">
+          <span class="product-disclaimer">風格：朋友派對</span>
+          <button class="ghost-button" type="button">玩法說明</button>
+          <button class="ghost-button" type="button">匯出紀錄</button>
+          <button class="ghost-button" type="button">匯入紀錄</button>
+        </div>
+      </header>
+      <main>
+        <section class="game-page" aria-label="匿名產品主頁 sample">
+          <section class="mode-section">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">親密關係定義</p>
+                <h2>先選這一輪的關係距離</h2>
+              </div>
+              <span>關係層級 A · 朋友聚會</span>
+            </div>
+            <div class="mode-grid">
+              <button class="mode-card is-active" type="button"><div class="mode-card-art product-mode-art">A</div><strong>關係層級 A</strong><small>輕鬆有趣 · 低侵入性</small><p>偏破冰與笑點，適合活動開場。</p></button>
+              <button class="mode-card" type="button"><div class="mode-card-art product-mode-art">B</div><strong>關係層級 B</strong><small>中度探索</small><p>讓玩家開始比較彼此印象。</p></button>
+              <button class="mode-card" type="button"><div class="mode-card-art product-mode-art">C</div><strong>關係層級 C</strong><small>深度對話</small><p>保留更深入的聊天可能。</p></button>
+            </div>
+            <div class="topic-picker"><label>題目類型</label><select><option>題型保留位</option></select><span>100 題</span></div>
+          </section>
+          <section class="game-board">
+            <section class="play-card">
+              <div class="card-pattern" aria-hidden="true"></div>
+              <div class="play-card-head">
+                <div><span class="category-pill">第 00 題 · 關係層級 A · 題型保留位</span><h2>題目內容已隱藏，這裡保留真實產品的閱讀層級。</h2></div>
+                <div class="progress-chip"><span class="score-label">已完成</span><strong>2</strong></div>
+              </div>
+              <div class="draw-row"><label>指定題號</label><select><option>00 | 題目摘要保留位</option></select></div>
+              <div class="session-row"><label>這次和誰玩</label><input type="text" value="對象代稱" /></div>
+              <div class="round-tools"><label class="score-slider"><span>對方猜測準確度</span><strong>65</strong><input type="range" min="0" max="100" step="5" value="65" /></label></div>
+              <label class="notes-label">給對方猜測的評語</label>
+              <textarea rows="4" placeholder="匿名評語示意，不放玩家真實紀錄。"></textarea>
+              <div class="commit-row"><p role="status">自動保存中</p><button class="primary-button" type="button">留下評語</button></div>
+            </section>
+          </section>
+          <section class="workspace-grid compact-workspace">
+            <article class="tool-panel wide-panel">
+              <div class="section-head"><h2>評語紀錄</h2><button class="danger-button" type="button">清除紀錄</button></div>
+              <div class="history-list"><div class="history-item"><div><span class="category-pill">第 00 題 · 題型保留位</span><h3>題目內容已隱藏</h3><p>匿名評語摘要示意。</p></div><strong>65 分</strong></div></div>
+            </article>
+          </section>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

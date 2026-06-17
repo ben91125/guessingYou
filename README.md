@@ -90,17 +90,28 @@
 
 其中 `prototypes/index1.html`、`prototypes/index2.html`、`prototypes/index3.html` 是單一風格輸出版，方便分別輸出給不同協作者討論。
 
-## 匿名風格 Sample
+## 匿名 Sample
 
-`samples/` 是更接近目前產品既有風格的匿名展示稿，適合給 Sales、設計協作者或內部討論使用。  
-這些頁面不載入正式題庫、不放正式產品名稱，也不顯示真實題目，只展示視覺氣氛與可銷售情境。
+專案目前保留兩種匿名 sample，兩者都不載入正式題庫、不放正式產品名稱，也不顯示真實題目。
 
-- `samples/index1.html`：溫馨桌遊
-- `samples/index2.html`：朋友派對
-- `samples/index3.html`：情侶約會
-- `samples/index4.html`：復古題卡
+- `style-samples/`：展示目前已有的視覺風格與商品氣氛，適合給美術、設計協作者或 Sales 看風格方向
+- `product-samples/`：貼近實際 `index.html` 的 UI 層級，適合 Sales 或內部討論實際操作畫面
 
-Sample 中的插圖使用專案內 inline SVG，不依賴外部圖片來源。
+風格 sample 中的插圖使用專案內 inline SVG，不依賴外部圖片來源。
+
+`style-samples/` 包含：
+
+- `style-samples/index1.html`：溫馨桌遊
+- `style-samples/index2.html`：朋友派對
+- `style-samples/index3.html`：情侶約會
+- `style-samples/index4.html`：復古題卡
+
+`product-samples/` 包含：
+
+- `product-samples/index1.html`：溫馨桌遊產品畫面
+- `product-samples/index2.html`：朋友派對產品畫面
+- `product-samples/index3.html`：情侶約會產品畫面
+- `product-samples/index4.html`：復古題卡產品畫面
 
 ## 資產封存
 

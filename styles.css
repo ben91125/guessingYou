@@ -203,7 +203,6 @@ h1 {
 .notes-label,
 .question-form label,
 .draw-row label,
-.mode-card span,
 .soft-pill {
   color: var(--muted);
   font-size: 0.82rem;
@@ -314,7 +313,7 @@ h1 {
 
 .rules-hero,
 .mode-section,
-.score-card,
+.progress-chip,
 .play-card,
 .tool-panel,
 .rules-grid article {
@@ -486,24 +485,21 @@ h1 {
 }
 
 .game-board {
-  align-items: stretch;
-  gap: 16px;
+  display: block;
 }
 
-.score-strip {
-  width: 150px;
+.progress-chip {
+  min-width: 118px;
+  min-height: 62px;
   display: grid;
-  gap: 8px;
-  align-content: start;
-}
-
-.score-card {
-  min-height: 76px;
-  padding: 12px;
+  align-content: center;
+  justify-items: start;
+  padding: 10px 13px;
   background: color-mix(in srgb, var(--surface), transparent 10%);
+  box-shadow: none;
 }
 
-.score-card strong {
+.progress-chip strong {
   display: block;
   margin-top: 5px;
   font-size: 1.28rem;
@@ -842,10 +838,6 @@ h1 {
     justify-content: flex-start;
   }
 
-  .score-strip {
-    width: 100%;
-  }
-
   .mode-grid,
   .rules-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -886,12 +878,16 @@ h1 {
     flex-direction: column;
   }
 
-  .score-strip,
   .workspace-grid,
   .mode-grid,
   .rules-grid,
   .bias-preview {
     grid-template-columns: 1fr;
+  }
+
+  .progress-chip {
+    width: 100%;
+    min-height: 54px;
   }
 
   .rules-hero {

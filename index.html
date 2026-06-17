@@ -76,25 +76,22 @@
                 <p class="eyebrow">遊戲模式</p>
                 <h2>選擇這一輪的問題深度</h2>
               </div>
-              <span id="modeHint">Mode A 朋友模式</span>
+              <span id="modeHint">朋友模式 · 剛認識到普通朋友</span>
             </div>
             <div class="mode-grid" id="modeGrid"></div>
           </section>
 
           <section class="game-board">
-            <aside class="score-strip">
-              <div class="score-card">
-                <span class="score-label">已完成</span>
-                <strong id="completedCount">0</strong>
-              </div>
-            </aside>
-
             <section class="play-card" id="playCard">
               <div class="card-pattern" aria-hidden="true"></div>
               <div class="play-card-head">
                 <div>
                   <span class="category-pill" id="currentMeta">準備開始</span>
                   <h2 id="questionText">先選模式，再抽一張題卡。</h2>
+                </div>
+                <div class="progress-chip" aria-label="遊戲進度">
+                  <span class="score-label">已完成</span>
+                  <strong id="completedCount">0</strong>
                 </div>
               </div>
 
@@ -142,7 +139,6 @@
     <template id="modeCardTemplate">
       <button class="mode-card" type="button">
         <img class="mode-card-art" alt="" />
-        <span></span>
         <strong></strong>
         <small></small>
         <p></p>

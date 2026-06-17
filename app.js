@@ -11,6 +11,7 @@ const modes = [
     tone: "輕鬆有趣",
     familiarity: "剛認識到普通朋友",
     depth: "低侵入性",
+    art: "https://api.iconify.design/fluent-emoji-flat:people-hugging.svg",
     description: "適合破冰、聚會、朋友局。題目偏日常和好笑，讓彼此不用太有壓力也能聊起來。",
   },
   {
@@ -20,6 +21,7 @@ const modes = [
     tone: "驗證彼此認知",
     familiarity: "已熟但不一定深聊",
     depth: "中度探索",
+    art: "https://api.iconify.design/fluent-emoji-flat:memo.svg",
     description: "適合同學、同事、老朋友。重點是驗證你以為的對方，和對方真實認知是否一致。",
   },
   {
@@ -29,6 +31,7 @@ const modes = [
     tone: "偏價值觀",
     familiarity: "伴侶或高度親近",
     depth: "深度對話",
+    art: "https://api.iconify.design/fluent-emoji-flat:heart-hands.svg",
     description: "適合情侶、曖昧後期或很親近的人。問題更靠近安全感、期待、承諾與人生選擇。",
   },
   {
@@ -38,6 +41,7 @@ const modes = [
     tone: "由我們維護",
     familiarity: "任何關係皆可",
     depth: "彈性深度",
+    art: "https://api.iconify.design/fluent-emoji-flat:wrapped-gift.svg",
     description: "玩家端不新增題目，題庫由產品方挑選與維護，未來可整理成活動題包或付費題包。",
   },
 ];
@@ -64,7 +68,7 @@ let questionLibrary = [];
 const dom = {
   themeToggle: document.querySelector("#themeToggle"),
   themeIcon: document.querySelector("#themeIcon"),
-  tabButtons: document.querySelectorAll(".tab-button"),
+  rulesBtn: document.querySelector("#rulesBtn"),
   rulesPage: document.querySelector("#rulesPage"),
   gamePage: document.querySelector("#gamePage"),
   startGameBtn: document.querySelector("#startGameBtn"),
@@ -76,15 +80,10 @@ const dom = {
   completedCount: document.querySelector("#completedCount"),
   currentMeta: document.querySelector("#currentMeta"),
   questionText: document.querySelector("#questionText"),
-  hosterToggle: document.querySelector("#hosterToggle"),
-  hosterPanel: document.querySelector("#hosterPanel"),
-  hosterStage: document.querySelector("#hosterStage"),
-  hosterPurpose: document.querySelector("#hosterPurpose"),
-  hosterFramework: document.querySelector("#hosterFramework"),
-  hosterTips: document.querySelector("#hosterTips"),
-  hosterWatchOut: document.querySelector("#hosterWatchOut"),
-  favoriteBtn: document.querySelector("#favoriteBtn"),
   questionNumberSelect: document.querySelector("#questionNumberSelect"),
+  partnerName: document.querySelector("#partnerName"),
+  guessScore: document.querySelector("#guessScore"),
+  guessScoreValue: document.querySelector("#guessScoreValue"),
   notes: document.querySelector("#notes"),
   saveStatus: document.querySelector("#saveStatus"),
   completeBtn: document.querySelector("#completeBtn"),
@@ -96,17 +95,18 @@ const dom = {
 
 const defaultState = {
   rounds: [],
-  favorites: [],
   currentQuestionId: null,
   draft: {
     notes: "",
-    rating: "miss",
+    score: 50,
+  },
+  session: {
+    partnerName: "",
   },
   settings: {
-    activeView: "rules",
+    activeView: "game",
     activeMode: "friends",
     theme: "light",
-    hosterMode: false,
   },
 };
 
@@ -128,6 +128,7 @@ function normalizePacks(packs) {
 function loadQuestionLibrary() {
   const packs = Array.isArray(window.QUESTION_PACKS) ? window.QUESTION_PACKS : fallbackPacks;
   questionLibrary = normalizePacks(packs);
+  if (!visibleModes().some((mode) => mode.id === state.settings.activeMode)) state.settings.activeMode = "friends";
   if (!state.currentQuestionId) state.currentQuestionId = numberedQuestions()[0]?.id || null;
   render();
 }
@@ -142,11 +143,13 @@ function loadState() {
 }
 
 function mergeState(saved) {
+  const { favorites, ...savedState } = saved || {};
   return {
     ...structuredClone(defaultState),
-    ...saved,
-    draft: { ...defaultState.draft, ...(saved.draft || {}) },
-    settings: { ...defaultState.settings, ...(saved.settings || {}) },
+    ...savedState,
+    draft: { ...defaultState.draft, ...(savedState.draft || {}) },
+    session: { ...defaultState.session, ...(savedState.session || {}) },
+    settings: { ...defaultState.settings, ...(savedState.settings || {}) },
   };
 }
 
@@ -169,8 +172,17 @@ function numberedQuestions() {
     .sort((a, b) => (a.number || 999) - (b.number || 999));
 }
 
+function questionsForMode(modeId = state.settings.activeMode) {
+  return numberedQuestions().filter((question) => question.mode === modeId);
+}
+
+function visibleModes() {
+  return modes.filter((mode) => questionsForMode(mode.id).length > 0);
+}
+
 function currentQuestion() {
-  return playableQuestions().find((question) => question.id === state.currentQuestionId) || numberedQuestions()[0] || null;
+  const activeQuestions = questionsForMode();
+  return activeQuestions.find((question) => question.id === state.currentQuestionId) || activeQuestions[0] || null;
 }
 
 function currentMode() {
@@ -189,13 +201,22 @@ function populateSelect(select, options, value) {
 }
 
 function setQuestion(questionId) {
-  const question = playableQuestions().find((item) => item.id === questionId);
+  const question = questionsForMode().find((item) => item.id === questionId);
   if (!question) return;
   state.currentQuestionId = question.id;
   state.settings.activeMode = question.mode;
-  state.draft = structuredClone(defaultState.draft);
+  state.draft = draftForQuestion(question.id);
   saveState("已切換題目");
   render();
+}
+
+function draftForQuestion(questionId) {
+  const existing = state.rounds.find((round) => round.questionId === questionId);
+  if (!existing) return structuredClone(defaultState.draft);
+  return {
+    notes: existing.notes || "",
+    score: Number(existing.score) || 0,
+  };
 }
 
 function completeRound() {
@@ -205,38 +226,37 @@ function completeRound() {
     return;
   }
 
-  state.rounds.unshift({
+  const nextRound = {
     id: crypto.randomUUID(),
+    partnerName: state.session.partnerName.trim(),
     mode: question.mode,
     questionId: question.id,
     questionNumber: question.number,
     questionText: question.text,
     category: question.category,
     notes: state.draft.notes.trim(),
-    rating: state.draft.rating,
+    score: Number(state.draft.score) || 0,
     playStyle: "table-aid",
     createdAt: new Date().toISOString(),
-  });
+    updatedAt: new Date().toISOString(),
+  };
 
-  state.draft = structuredClone(defaultState.draft);
+  const existingIndex = state.rounds.findIndex((round) => round.questionId === question.id);
+  if (existingIndex >= 0) {
+    nextRound.id = state.rounds[existingIndex].id;
+    nextRound.createdAt = state.rounds[existingIndex].createdAt;
+    state.rounds.splice(existingIndex, 1);
+  }
+  state.rounds.unshift(nextRound);
+
   saveState("已留下評語");
   render();
 }
 
-function toggleFavorite() {
-  const question = currentQuestion();
-  if (!question) return;
-
-  const exists = state.favorites.includes(question.id);
-  state.favorites = exists ? state.favorites.filter((id) => id !== question.id) : [...state.favorites, question.id];
-  saveState(exists ? "已取消收藏" : "已收藏題目");
-  renderQuestion();
-  renderStats();
-}
-
 function saveDraft() {
   state.draft.notes = dom.notes.value;
-  state.draft.rating = document.querySelector("input[name='rating']:checked")?.value || "miss";
+  state.draft.score = Number(dom.guessScore.value);
+  state.session.partnerName = dom.partnerName.value;
   saveState();
 }
 
@@ -246,7 +266,6 @@ function render() {
   renderModes();
   renderQuestionNumberSelect();
   renderQuestion();
-  renderHoster();
   renderDraft();
   renderStats();
   renderHistory();
@@ -260,17 +279,26 @@ function renderTheme() {
 function renderActiveView() {
   dom.rulesPage.hidden = state.settings.activeView !== "rules";
   dom.gamePage.hidden = state.settings.activeView !== "game";
-  dom.tabButtons.forEach((button) => {
-    button.classList.toggle("is-active", button.dataset.view === state.settings.activeView);
-  });
+  dom.rulesBtn.textContent = state.settings.activeView === "rules" ? "回到遊戲" : "玩法說明";
 }
 
 function renderModes() {
   const renderTarget = (target, interactive) => {
     target.innerHTML = "";
-    modes.forEach((mode) => {
-      const node = dom.modeCardTemplate.content.firstElementChild.cloneNode(true);
-      node.classList.toggle("is-active", mode.id === state.settings.activeMode);
+    visibleModes().forEach((mode) => {
+      const node = interactive ? dom.modeCardTemplate.content.firstElementChild.cloneNode(true) : document.createElement("article");
+      if (!interactive) node.className = "mode-card mode-info-card";
+      node.classList.toggle("is-active", interactive && mode.id === state.settings.activeMode);
+      if (!interactive) {
+        const img = document.createElement("img");
+        img.src = mode.art;
+        img.alt = "";
+        img.className = "mode-card-art";
+        node.append(img);
+      }
+      if (!interactive) {
+        node.insertAdjacentHTML("beforeend", "<span></span><strong></strong><small></small><p></p>");
+      }
       node.querySelector("span").textContent = mode.code;
       node.querySelector("strong").textContent = mode.name;
       node.querySelector("small").textContent = `${mode.familiarity} · ${mode.tone} · ${mode.depth}`;
@@ -287,15 +315,23 @@ function renderModes() {
 
 function switchMode(modeId) {
   state.settings.activeMode = modeId;
-  const firstInMode = numberedQuestions().find((question) => question.mode === modeId);
-  state.currentQuestionId = firstInMode?.id || state.currentQuestionId;
-  state.draft = structuredClone(defaultState.draft);
+  const firstInMode = questionsForMode(modeId)[0];
+  state.currentQuestionId = firstInMode?.id || null;
+  state.draft = firstInMode ? draftForQuestion(firstInMode.id) : structuredClone(defaultState.draft);
   saveState("已切換模式");
   render();
 }
 
 function renderQuestionNumberSelect() {
-  const options = numberedQuestions().map((question) => ({
+  const questions = questionsForMode();
+  if (!questions.length) {
+    populateSelect(dom.questionNumberSelect, [{ value: "", label: "這個模式目前尚未開放題目" }], "");
+    dom.questionNumberSelect.disabled = true;
+    return;
+  }
+
+  dom.questionNumberSelect.disabled = false;
+  const options = questions.map((question) => ({
     value: question.id,
     label: `${String(question.number).padStart(2, "0")}｜${question.level || ""}｜${question.text.replace(/\s+/g, " ").slice(0, 30)}`,
   }));
@@ -309,28 +345,13 @@ function renderQuestion() {
 
   dom.currentMeta.textContent = question ? `${numberText} · ${mode?.name || "模式"} · ${question.category}` : "準備開始";
   dom.questionText.textContent = question ? question.text : "先選一題，開始面對面猜猜看。";
-  dom.favoriteBtn.classList.toggle("is-active", Boolean(question && state.favorites.includes(question.id)));
-  dom.favoriteBtn.textContent = question && state.favorites.includes(question.id) ? "★" : "☆";
-}
-
-function renderHoster() {
-  const question = currentQuestion();
-  const hoster = question?.hoster || {};
-
-  dom.hosterToggle.textContent = state.settings.hosterMode ? "HOSTER ON" : "HOSTER OFF";
-  dom.hosterToggle.classList.toggle("is-active", state.settings.hosterMode);
-  dom.hosterPanel.hidden = !state.settings.hosterMode;
-  dom.hosterStage.textContent = hoster.stage || "桌遊進行中";
-  dom.hosterPurpose.textContent = hoster.purpose || "這題用來幫助玩家校準彼此認知。";
-  dom.hosterFramework.textContent = hoster.framework || "題卡引導";
-  dom.hosterTips.textContent = hoster.tips || "先讓對方猜，再由本人用口頭揭曉答案。";
-  dom.hosterWatchOut.textContent = hoster.watchOut || "維持輕鬆，不把猜錯解讀成不在乎。";
 }
 
 function renderDraft() {
+  dom.partnerName.value = state.session.partnerName;
   dom.notes.value = state.draft.notes;
-  const rating = document.querySelector(`input[name='rating'][value='${state.draft.rating}']`);
-  if (rating) rating.checked = true;
+  dom.guessScore.value = state.draft.score;
+  dom.guessScoreValue.textContent = state.draft.score;
 }
 
 function renderStats() {
@@ -344,10 +365,13 @@ function renderHistory() {
   if (!state.rounds.length) {
     const empty = document.createElement("p");
     empty.className = "empty-state";
-    empty.textContent = "留下第一則評語後，這裡會變成你的小小猜測紀錄本。";
+    empty.textContent = "留下第一則評語後，這裡會變成你和對方的小小猜測紀錄本。";
     dom.historyList.append(empty);
     return;
   }
+
+  const partner = state.session.partnerName.trim();
+  dom.historyTitle.textContent = partner ? `評語紀錄：${partner}` : "評語紀錄";
 
   state.rounds.slice(0, 20).forEach((round) => {
     const node = dom.historyItemTemplate.content.firstElementChild.cloneNode(true);
@@ -355,8 +379,8 @@ function renderHistory() {
     node.querySelector("h3").textContent = round.questionText;
     node.querySelector("p").textContent = round.notes || "沒有補充評語。";
     const score = node.querySelector("strong");
-    score.textContent = round.rating === "hit" ? "猜中" : "未中";
-    score.classList.toggle("is-miss", round.rating !== "hit");
+    score.textContent = `${round.score ?? 0} 分`;
+    score.classList.toggle("is-miss", Number(round.score) < 60);
     dom.historyList.append(node);
   });
 }
@@ -367,9 +391,10 @@ function exportJson() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `你猜猜看-${new Date().toISOString().slice(0, 10)}.json`;
+  link.download = `你猜猜看-遊戲紀錄-${new Date().toISOString().slice(0, 10)}.json`;
   link.click();
   URL.revokeObjectURL(url);
+  saveState("已匯出遊戲紀錄");
 }
 
 function importJson(event) {
@@ -384,7 +409,7 @@ function importJson(event) {
       saveState("匯入完成");
       render();
     } catch {
-      alert("匯入失敗，請確認 JSON 格式是否正確。");
+      alert("匯入失敗，請確認這是你猜猜看的遊戲紀錄檔。");
     } finally {
       dom.importFile.value = "";
     }
@@ -393,7 +418,7 @@ function importJson(event) {
 }
 
 function clearRounds() {
-  if (!confirm("確定要清除所有評語紀錄嗎？題庫與收藏會保留。")) return;
+  if (!confirm("確定要清除所有評語紀錄嗎？題庫會保留。")) return;
   state.rounds = [];
   saveState("評語紀錄已清除");
   render();
@@ -406,29 +431,23 @@ function bindEvents() {
     renderTheme();
   });
 
-  dom.hosterToggle.addEventListener("click", () => {
-    state.settings.hosterMode = !state.settings.hosterMode;
-    saveState(state.settings.hosterMode ? "已開啟 HOSTER 模式" : "已關閉 HOSTER 模式");
-    renderHoster();
+  dom.rulesBtn.addEventListener("click", () => {
+    state.settings.activeView = state.settings.activeView === "rules" ? "game" : "rules";
+    saveState("已切換頁面");
+    renderActiveView();
   });
 
   dom.questionNumberSelect.addEventListener("change", () => setQuestion(dom.questionNumberSelect.value));
-  dom.favoriteBtn.addEventListener("click", toggleFavorite);
   dom.completeBtn.addEventListener("click", completeRound);
   dom.clearRoundsBtn.addEventListener("click", clearRounds);
   dom.exportBtn.addEventListener("click", exportJson);
   dom.importFile.addEventListener("change", importJson);
+  dom.partnerName.addEventListener("input", saveDraft);
   dom.notes.addEventListener("input", saveDraft);
-  document.querySelectorAll("input[name='rating']").forEach((input) => {
-    input.addEventListener("change", saveDraft);
-  });
-
-  dom.tabButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      state.settings.activeView = button.dataset.view;
-      saveState("已切換頁面");
-      renderActiveView();
-    });
+  dom.guessScore.addEventListener("input", () => {
+    state.draft.score = Number(dom.guessScore.value);
+    dom.guessScoreValue.textContent = state.draft.score;
+    saveState();
   });
 
   dom.startGameBtn.addEventListener("click", () => {

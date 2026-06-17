@@ -89,3 +89,13 @@
 - 給一般美術或視覺協作者：可從瀏覽器輸出 PDF / PNG 後標註配色、插圖、字體、間距與情緒方向
 
 其中 `prototypes/index1.html`、`prototypes/index2.html`、`prototypes/index3.html` 是單一風格輸出版，方便分別輸出給不同協作者討論。
+
+## 匿名風格 Sample
+
+`samples/` 是更接近目前產品既有風格的匿名展示稿，適合給 Sales、設計協作者或內部討論使用。  
+這些頁面不載入正式題庫、不放正式產品名稱，也不顯示真實題目，只展示視覺氣氛與可銷售情境。
+
+- `samples/index1.html`：溫馨桌遊
+- `samples/index2.html`：朋友派對
+- `samples/index3.html`：情侶約會
+- `samples/index4.html`：復古題卡

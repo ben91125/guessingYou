@@ -190,6 +190,131 @@ button {
   font-weight: 900;
 }
 
+.sample-illustration {
+  width: min(100%, 220px);
+  height: auto;
+  overflow: visible;
+}
+
+.art-shadow {
+  fill: color-mix(in srgb, var(--brand), transparent 82%);
+}
+
+.art-card,
+.art-envelope {
+  fill: color-mix(in srgb, var(--surface), white 18%);
+  stroke: var(--brand);
+  stroke-width: 3;
+}
+
+.art-card-b {
+  fill: color-mix(in srgb, var(--surface-2), white 12%);
+}
+
+.art-card-c,
+.art-envelope {
+  fill: color-mix(in srgb, var(--surface-3), white 18%);
+}
+
+.art-retro-back {
+  fill: color-mix(in srgb, var(--surface-2), white 8%);
+  stroke: var(--accent);
+}
+
+.art-retro-front {
+  fill: color-mix(in srgb, var(--surface), white 6%);
+  stroke: var(--brand);
+}
+
+.art-dot,
+.art-balloon,
+.art-seal {
+  stroke: rgba(255, 255, 255, 0.76);
+  stroke-width: 3;
+}
+
+.art-dot.gold,
+.art-balloon.gold {
+  fill: var(--gold);
+}
+
+.art-dot.brand,
+.art-balloon.brand {
+  fill: var(--brand);
+}
+
+.art-dot.accent,
+.art-balloon.accent,
+.art-heart.accent {
+  fill: var(--accent);
+}
+
+.art-line,
+.art-steam,
+.art-streamer,
+.art-string,
+.art-confetti-line,
+.art-envelope-line,
+.art-soft-line,
+.art-seal-mark,
+.art-corner {
+  fill: none;
+  stroke: var(--brand-strong);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.art-line,
+.art-envelope-line {
+  stroke-width: 4;
+}
+
+.art-steam,
+.art-streamer,
+.art-string,
+.art-soft-line {
+  stroke-width: 3;
+}
+
+.art-streamer.accent {
+  stroke: var(--accent);
+}
+
+.art-streamer.brand {
+  stroke: var(--brand);
+}
+
+.art-string {
+  stroke: color-mix(in srgb, var(--muted), transparent 18%);
+}
+
+.art-confetti {
+  fill: var(--gold);
+}
+
+.art-confetti-line {
+  stroke: var(--accent);
+  stroke-width: 4;
+}
+
+.art-heart {
+  stroke: rgba(255, 255, 255, 0.72);
+  stroke-width: 3;
+}
+
+.art-soft-line {
+  stroke: color-mix(in srgb, var(--brand), transparent 42%);
+}
+
+.art-seal {
+  fill: color-mix(in srgb, var(--gold), white 8%);
+}
+
+.art-seal-mark,
+.art-corner {
+  stroke-width: 4;
+}
+
 .mode-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

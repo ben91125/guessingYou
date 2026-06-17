@@ -99,3 +99,5 @@
 - `samples/index2.html`：朋友派對
 - `samples/index3.html`：情侶約會
 - `samples/index4.html`：復古題卡
+
+Sample 中的插圖使用專案內 inline SVG，不依賴外部圖片來源。

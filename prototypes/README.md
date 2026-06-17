@@ -5,6 +5,7 @@
 ## 使用方式
 
 - 直接用瀏覽器打開 `prototypes/index.html`
+- 單獨輸出某個方向時，打開 `prototypes/index1.html`、`prototypes/index2.html` 或 `prototypes/index3.html`
 - 主要修改 `prototypes/styles.css`
 - 所有配色集中在 `:root` 與 `.prototype.theme-*`
 - 真正要替換的品牌名、題目、插圖都以「保留位」標示
@@ -18,6 +19,12 @@
 1. `theme-table-card`：桌卡感，偏溫暖、穩定、適合多人聚會。
 2. `theme-journal`：手帳感，偏可愛、親密、適合朋友與情侶。
 3. `theme-event`：活動卡感，偏清爽、有主持感，適合未來付費題包或活動包。
+
+對應單頁輸出：
+
+- `index1.html`：溫暖桌卡
+- `index2.html`：手帳貼紙
+- `index3.html`：清爽活動卡
 
 ## 保密原則
 

@@ -244,6 +244,12 @@ GitHub Pages 部署方向：
 
 使用者仍是審核與發想角色，Codex 依照「可交接給設計協作者修改」的目標整理原型檔案。
 
+後續使用者提出希望把現有風格版型額外輸出成 `indexX.html`，方便各別輸出 PDF / PNG。於是新增：
+
+- `prototypes/index1.html`：溫暖桌卡單頁
+- `prototypes/index2.html`：手帳貼紙單頁
+- `prototypes/index3.html`：清爽活動卡單頁
+
 ## 目前產品定位
 
 目前版本不是完整商業化產品，而是一個可部署、可驗收的 MVP：

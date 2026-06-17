@@ -43,6 +43,26 @@ input {
   margin-bottom: 28px;
 }
 
+.compact-brief {
+  max-width: none;
+}
+
+.single-export .prototype {
+  grid-template-columns: 1fr;
+}
+
+.single-export .prototype-note {
+  position: static;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 16px;
+  align-items: baseline;
+}
+
+.single-export .prototype-note p {
+  grid-column: 1 / -1;
+}
+
 .kicker,
 .mock-brand-label,
 .prototype-note span,

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Prototype 2 - Journal</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="single-export">
+    <main class="prototype-shell" aria-label="匿名設計原型二">
+      <header class="brief-header compact-brief">
+        <p class="kicker">Prototype 2</p>
+        <h1>手帳貼紙</h1>
+        <p>單頁輸出版。內容皆為保留位，方便美術協作者直接標註視覺方向。</p>
+      </header>
+
+      <section class="prototype theme-journal" aria-labelledby="proto-b">
+        <div class="prototype-note">
+          <span>方向 B</span>
+          <strong id="proto-b">手帳貼紙</strong>
+          <p>適合偏可愛、輕鬆、願意留下回憶的情境。重點是柔軟、可親近。</p>
+        </div>
+
+        <article class="mock-app compact">
+          <header class="mock-topbar">
+            <div>
+              <p class="mock-brand-label">產品名稱保留位</p>
+              <h2>主標題保留位</h2>
+            </div>
+            <div class="asset-placeholder hero">主視覺</div>
+          </header>
+
+          <section class="split-board">
+            <div class="sticker-list">
+              <div class="sticker is-active">關係 A</div>
+              <div class="sticker">關係 B</div>
+              <div class="sticker">關係 C</div>
+            </div>
+            <div class="paper-card">
+              <span class="paper-tag">第 00 題</span>
+              <h3>題目文字保留位，像抽到一張小紙條。</h3>
+              <select>
+                <option>類型選項保留位</option>
+              </select>
+              <div class="soft-scale">
+                <span>0</span>
+                <input type="range" min="0" max="100" value="70" />
+                <span>100</span>
+              </div>
+              <textarea placeholder="評語保留位"></textarea>
+            </div>
+          </section>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Prototype 1 - Table Card</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="single-export">
+    <main class="prototype-shell" aria-label="匿名設計原型一">
+      <header class="brief-header compact-brief">
+        <p class="kicker">Prototype 1</p>
+        <h1>溫暖桌卡</h1>
+        <p>單頁輸出版。內容皆為保留位，可直接輸出 PDF / PNG 後交給設計協作者標註。</p>
+      </header>
+
+      <section class="prototype theme-table-card" aria-labelledby="proto-a">
+        <div class="prototype-note">
+          <span>方向 A</span>
+          <strong id="proto-a">溫暖桌卡</strong>
+          <p>適合桌遊、朋友聚會與日常場景。重點是沉穩、親切、讀題清楚。</p>
+        </div>
+
+        <article class="mock-app">
+          <header class="mock-topbar">
+            <div>
+              <p class="mock-brand-label">產品名稱保留位</p>
+              <h2>主標題保留位</h2>
+            </div>
+            <nav class="mock-actions" aria-label="示意操作">
+              <button>玩法</button>
+              <button>匯出</button>
+            </nav>
+          </header>
+
+          <section class="mock-mode-panel">
+            <div class="section-title">
+              <span>L1</span>
+              <h3>關係距離</h3>
+            </div>
+            <div class="mode-grid">
+              <div class="mode-card is-active">
+                <div class="asset-placeholder small">插圖</div>
+                <strong>關係選項 A</strong>
+                <p>熟悉度說明保留位，描述這一輪適合的對象與氣氛。</p>
+              </div>
+              <div class="mode-card">
+                <div class="asset-placeholder small">插圖</div>
+                <strong>關係選項 B</strong>
+                <p>熟悉度說明保留位，描述更深入或更安靜的聊天節奏。</p>
+              </div>
+              <div class="mode-card">
+                <div class="asset-placeholder small">插圖</div>
+                <strong>關係選項 C</strong>
+                <p>熟悉度說明保留位，保留給親密或價值觀題型。</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="mock-play-panel">
+            <div class="play-meta">
+              <span>第 00 題</span>
+              <span>關係保留位</span>
+              <span>類型保留位</span>
+            </div>
+            <div class="question-row">
+              <h3>題目文字保留位，控制在兩行內仍要好讀。</h3>
+              <div class="progress-card">
+                <span>已完成</span>
+                <strong>0</strong>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <label>
+                <span>L2 題目類型</span>
+                <select>
+                  <option>類型選項保留位</option>
+                </select>
+              </label>
+              <label>
+                <span>題號</span>
+                <select>
+                  <option>00 | 題目摘要保留位</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="rating-card">
+              <div>
+                <span>猜測準確度</span>
+                <strong>50 分</strong>
+              </div>
+              <input type="range" min="0" max="100" value="50" />
+            </div>
+
+            <label class="note-area">
+              <span>給對方猜測的評語</span>
+              <textarea placeholder="評語保留位，不放真實內容"></textarea>
+            </label>
+          </section>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

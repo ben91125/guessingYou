@@ -87,3 +87,5 @@
 
 - 給網頁設計師：可直接調整 `prototypes/index.html` 與 `prototypes/styles.css`
 - 給一般美術或視覺協作者：可從瀏覽器輸出 PDF / PNG 後標註配色、插圖、字體、間距與情緒方向
+
+其中 `prototypes/index1.html`、`prototypes/index2.html`、`prototypes/index3.html` 是單一風格輸出版，方便分別輸出給不同協作者討論。

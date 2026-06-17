@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Anonymous Design Prototypes</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="prototype-shell" aria-label="匿名設計原型">
+      <header class="brief-header">
+        <p class="kicker">Anonymous tabletop helper prototype</p>
+        <h1>設計方向草稿</h1>
+        <p>
+          以下畫面只保留操作結構與視覺節奏。正式標題、正式題目與題庫內容已移除，
+          設計師可以直接替換色票、插圖、字體與卡片樣式。
+        </p>
+      </header>
+
+      <section class="prototype theme-table-card" aria-labelledby="proto-a">
+        <div class="prototype-note">
+          <span>方向 A</span>
+          <strong id="proto-a">溫暖桌卡</strong>
+          <p>適合桌遊、朋友聚會與日常場景。重點是沉穩、親切、讀題清楚。</p>
+        </div>
+
+        <article class="mock-app">
+          <header class="mock-topbar">
+            <div>
+              <p class="mock-brand-label">產品名稱保留位</p>
+              <h2>主標題保留位</h2>
+            </div>
+            <nav class="mock-actions" aria-label="示意操作">
+              <button>玩法</button>
+              <button>匯出</button>
+            </nav>
+          </header>
+
+          <section class="mock-mode-panel">
+            <div class="section-title">
+              <span>L1</span>
+              <h3>關係距離</h3>
+            </div>
+            <div class="mode-grid">
+              <div class="mode-card is-active">
+                <div class="asset-placeholder small">插圖</div>
+                <strong>關係選項 A</strong>
+                <p>熟悉度說明保留位，描述這一輪適合的對象與氣氛。</p>
+              </div>
+              <div class="mode-card">
+                <div class="asset-placeholder small">插圖</div>
+                <strong>關係選項 B</strong>
+                <p>熟悉度說明保留位，描述更深入或更安靜的聊天節奏。</p>
+              </div>
+              <div class="mode-card">
+                <div class="asset-placeholder small">插圖</div>
+                <strong>關係選項 C</strong>
+                <p>熟悉度說明保留位，保留給親密或價值觀題型。</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="mock-play-panel">
+            <div class="play-meta">
+              <span>第 00 題</span>
+              <span>關係保留位</span>
+              <span>類型保留位</span>
+            </div>
+            <div class="question-row">
+              <h3>題目文字保留位，控制在兩行內仍要好讀。</h3>
+              <div class="progress-card">
+                <span>已完成</span>
+                <strong>0</strong>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <label>
+                <span>L2 題目類型</span>
+                <select>
+                  <option>類型選項保留位</option>
+                </select>
+              </label>
+              <label>
+                <span>題號</span>
+                <select>
+                  <option>00 | 題目摘要保留位</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="rating-card">
+              <div>
+                <span>猜測準確度</span>
+                <strong>50 分</strong>
+              </div>
+              <input type="range" min="0" max="100" value="50" />
+            </div>
+
+            <label class="note-area">
+              <span>給對方猜測的評語</span>
+              <textarea placeholder="評語保留位，不放真實內容"></textarea>
+            </label>
+          </section>
+        </article>
+      </section>
+
+      <section class="prototype theme-journal" aria-labelledby="proto-b">
+        <div class="prototype-note">
+          <span>方向 B</span>
+          <strong id="proto-b">手帳貼紙</strong>
+          <p>適合偏可愛、輕鬆、願意留下回憶的情境。重點是柔軟、可親近。</p>
+        </div>
+
+        <article class="mock-app compact">
+          <header class="mock-topbar">
+            <div>
+              <p class="mock-brand-label">產品名稱保留位</p>
+              <h2>主標題保留位</h2>
+            </div>
+            <div class="asset-placeholder hero">主視覺</div>
+          </header>
+
+          <section class="split-board">
+            <div class="sticker-list">
+              <div class="sticker is-active">關係 A</div>
+              <div class="sticker">關係 B</div>
+              <div class="sticker">關係 C</div>
+            </div>
+            <div class="paper-card">
+              <span class="paper-tag">第 00 題</span>
+              <h3>題目文字保留位，像抽到一張小紙條。</h3>
+              <select>
+                <option>類型選項保留位</option>
+              </select>
+              <div class="soft-scale">
+                <span>0</span>
+                <input type="range" min="0" max="100" value="70" />
+                <span>100</span>
+              </div>
+              <textarea placeholder="評語保留位"></textarea>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="prototype theme-event" aria-labelledby="proto-c">
+        <div class="prototype-note">
+          <span>方向 C</span>
+          <strong id="proto-c">清爽活動卡</strong>
+          <p>適合未來活動包、付費題包或主持人版本。重點是清楚、可靠、可擴充。</p>
+        </div>
+
+        <article class="mock-app dashboard">
+          <aside class="side-rail">
+            <div class="asset-placeholder badge">圖</div>
+            <button class="is-active">關係 A</button>
+            <button>關係 B</button>
+            <button>關係 C</button>
+          </aside>
+          <section class="main-stage">
+            <header class="stage-header">
+              <div>
+                <p class="mock-brand-label">產品名稱保留位</p>
+                <h2>主標題保留位</h2>
+              </div>
+              <div class="progress-card">
+                <span>已完成</span>
+                <strong>0</strong>
+              </div>
+            </header>
+            <div class="question-panel">
+              <div class="play-meta">
+                <span>第 00 題</span>
+                <span>類型保留位</span>
+              </div>
+              <h3>題目文字保留位，用來測試大螢幕與平板上的閱讀感。</h3>
+              <div class="form-grid">
+                <select>
+                  <option>L2 題目類型</option>
+                </select>
+                <select>
+                  <option>題號選項</option>
+                </select>
+              </div>
+              <textarea placeholder="評語保留位"></textarea>
+            </div>
+          </section>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

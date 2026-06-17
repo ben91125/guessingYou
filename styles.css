@@ -846,12 +846,12 @@ h1 {
 
 @media (max-width: 720px) {
   .app-shell {
-    width: min(100% - 22px, 1180px);
-    padding-top: 14px;
+    width: min(100% - 20px, 375px);
+    padding: 12px 0 32px;
   }
 
   h1 {
-    font-size: 2.35rem;
+    font-size: 2.2rem;
   }
 
   .topbar {
@@ -872,10 +872,14 @@ h1 {
   .session-row,
   .round-tools,
   .commit-row,
-  .play-card-head,
   .section-head {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .play-card-head {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .workspace-grid,
@@ -888,6 +892,28 @@ h1 {
   .progress-chip {
     width: 100%;
     min-height: 54px;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    justify-items: stretch;
+  }
+
+  .progress-chip strong {
+    margin-top: 0;
+    text-align: right;
+  }
+
+  .play-card h2 {
+    font-size: 1.72rem;
+  }
+
+  .draw-row,
+  .session-row {
+    gap: 7px;
+    margin-bottom: 12px;
+  }
+
+  .score-slider {
+    width: 100%;
   }
 
   .rules-hero {
@@ -946,5 +972,27 @@ h1 {
   .tool-panel,
   .mode-section {
     padding: 15px;
+  }
+}
+
+@media (max-width: 380px) {
+  .app-shell {
+    width: calc(100% - 16px);
+  }
+
+  .topbar-actions {
+    gap: 6px;
+  }
+
+  .ghost-button,
+  .import-label,
+  .style-picker {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
+  .style-picker {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 }

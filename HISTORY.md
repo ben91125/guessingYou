@@ -262,6 +262,8 @@ GitHub Pages 部署方向：
 
 使用者同意將 Codex 設計的插圖放入 sample，因此四個匿名 sample 進一步加入專案內 inline SVG 插圖，讓頁面更接近可展示稿，同時不依賴外部圖片來源。
 
+使用者詢問 `assets/` 是否自始至終為空。檢查 Git 歷史後確認，早期曾有 `assets/table-cards.svg`，後來因流程簡化被移除。依照使用者新的整理規則，未使用 SVG 應封存在 `assets/deprecated/`，因此將舊的桌卡 SVG 從歷史中取回並保存為 `assets/deprecated/table-cards.svg`。
+
 ## 目前產品定位
 
 目前版本不是完整商業化產品，而是一個可部署、可驗收的 MVP：

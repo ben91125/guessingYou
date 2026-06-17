@@ -101,3 +101,7 @@
 - `samples/index4.html`：復古題卡
 
 Sample 中的插圖使用專案內 inline SVG，不依賴外部圖片來源。
+
+## 資產封存
+
+未使用但仍想保留脈絡的 SVG 會放在 `assets/deprecated/`。這些檔案不是目前正式頁面或 sample 的引用素材，只作為歷史設計資產封存。

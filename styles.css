@@ -373,6 +373,29 @@ h1 {
   margin-bottom: 14px;
 }
 
+.topic-picker {
+  display: grid;
+  grid-template-columns: auto minmax(220px, 360px) auto;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid color-mix(in srgb, var(--line), transparent 35%);
+}
+
+.topic-picker label,
+.topic-picker span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.topic-picker span {
+  min-width: 54px;
+  color: var(--brand-strong);
+  text-align: right;
+}
+
 .mode-grid,
 .rules-grid,
 .workspace-grid {
@@ -843,6 +866,10 @@ h1 {
     padding: 24px;
   }
 
+  .topic-picker {
+    grid-template-columns: auto minmax(260px, 420px) auto;
+  }
+
   .mode-card {
     min-height: 176px;
   }
@@ -939,6 +966,15 @@ h1 {
   .rules-grid,
   .bias-preview {
     grid-template-columns: 1fr;
+  }
+
+  .topic-picker {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .topic-picker span {
+    text-align: left;
   }
 
   .progress-chip {

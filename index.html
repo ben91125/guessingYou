@@ -30,9 +30,9 @@
         <section class="rules-page" id="rulesPage" aria-label="規則介紹" hidden>
           <div class="rules-hero">
             <div>
-              <span class="soft-pill">開始前先選模式</span>
+              <span class="soft-pill">先選關係，再選題型</span>
               <h2>把題卡放到桌上，猜猜對方心裡真正的答案。</h2>
-              <p>這個網頁只是桌遊工具：列出題目、切到指定題號、留下對方猜測的評語。答案和笑聲都留在面對面的聊天裡，主持提示先放在規則理解中，不打擾遊戲流程。</p>
+              <p>這個網頁只是桌遊工具：先依照彼此熟悉度選關係，再選想聊的題目類型。答案和笑聲都留在面對面的聊天裡，網頁只負責列題、對題號、留下評語。</p>
             </div>
             <img class="hero-card-art" src="https://api.iconify.design/fluent-emoji-flat:game-die.svg" alt="" />
             <button class="primary-button" id="startGameBtn" type="button">開始遊戲</button>
@@ -43,8 +43,8 @@
           <div class="rules-grid">
             <article>
               <strong>1</strong>
-              <h3>選模式</h3>
-              <p>先依照彼此熟悉度，決定今天要玩多深。</p>
+              <h3>選關係</h3>
+              <p>先依照彼此熟悉度，決定今天適合聊到多深。</p>
             </article>
             <article>
               <strong>2</strong>
@@ -73,12 +73,17 @@
           <section class="mode-section" aria-label="遊戲模式">
             <div class="section-head">
               <div>
-                <p class="eyebrow">遊戲模式</p>
-                <h2>選擇這一輪的問題深度</h2>
+                <p class="eyebrow">親密關係定義</p>
+                <h2>先選這一輪的關係距離</h2>
               </div>
               <span id="modeHint">朋友模式 · 剛認識到普通朋友</span>
             </div>
             <div class="mode-grid" id="modeGrid"></div>
+            <div class="topic-picker">
+              <label for="topicSelect">題目類型</label>
+              <select id="topicSelect"></select>
+              <span id="topicCount">0 題</span>
+            </div>
           </section>
 
           <section class="game-board">
@@ -96,7 +101,7 @@
               </div>
 
               <div class="draw-row">
-                <label for="questionNumberSelect">指定題號</label>
+                <label for="questionNumberSelect">SOURCE 題號</label>
                 <select id="questionNumberSelect"></select>
               </div>
 
@@ -165,6 +170,7 @@
     </template>
 
     <script src="questions-data.js"></script>
+    <script src="source-questions-data.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

@@ -1,8 +1,6 @@
 const STORAGE_KEY = "guessingYou.tableAid.v1";
 const ALL_OPTION = "全部";
 
-const categories = ["生活習慣", "興趣嗜好", "工作與學習", "消費觀", "人際關係", "愛情觀", "人生觀"];
-
 const modes = [
   {
     id: "friends",
@@ -113,6 +111,8 @@ const dom = {
   modeGrid: document.querySelector("#modeGrid"),
   rulesModeGrid: document.querySelector("#rulesModeGrid"),
   modeHint: document.querySelector("#modeHint"),
+  topicSelect: document.querySelector("#topicSelect"),
+  topicCount: document.querySelector("#topicCount"),
   heroArt: document.querySelector(".hero-card-art"),
   exportBtn: document.querySelector("#exportBtn"),
   importFile: document.querySelector("#importFile"),
@@ -145,6 +145,7 @@ const defaultState = {
   settings: {
     activeView: "game",
     activeMode: "friends",
+    activeTopic: "life_habits",
     visualStyle: "cozy",
   },
 };
@@ -164,11 +165,27 @@ function normalizePacks(packs) {
   );
 }
 
+function normalizeSourceQuestions(source) {
+  if (!Array.isArray(source?.questions)) return [];
+  return source.questions.map((question, index) => ({
+    ...question,
+    id: question.id || `source-${index + 1}`,
+    number: question.number || index + 1,
+    numberLabel: question.sourceId || String(index + 1).padStart(3, "0"),
+    level: question.depthName || "候選",
+    category: question.topicName || "候選題",
+    packId: "source-library",
+    packName: "SOURCE 候選題庫",
+    packStatus: "selected-draft",
+    builtIn: true,
+  }));
+}
+
 function loadQuestionLibrary() {
+  const sourceQuestions = normalizeSourceQuestions(window.SOURCE_QUESTIONS);
   const packs = Array.isArray(window.QUESTION_PACKS) ? window.QUESTION_PACKS : fallbackPacks;
-  questionLibrary = normalizePacks(packs);
-  if (!visibleModes().some((mode) => mode.id === state.settings.activeMode)) state.settings.activeMode = "friends";
-  if (!state.currentQuestionId) state.currentQuestionId = numberedQuestions()[0]?.id || null;
+  questionLibrary = sourceQuestions.length ? sourceQuestions : normalizePacks(packs);
+  ensureSelection();
   render();
 }
 
@@ -207,17 +224,35 @@ function playableQuestions() {
 }
 
 function numberedQuestions() {
-  return playableQuestions()
-    .filter((question) => question.packId === "personal-starter")
-    .sort((a, b) => (a.number || 999) - (b.number || 999));
+  return playableQuestions().sort((a, b) => {
+    const topicDiff = (a.topicOrder || 999) - (b.topicOrder || 999);
+    if (topicDiff) return topicDiff;
+    return (a.number || 999) - (b.number || 999);
+  });
 }
 
-function questionsForMode(modeId = state.settings.activeMode) {
-  return numberedQuestions().filter((question) => question.mode === modeId);
+function topicsForMode(modeId = state.settings.activeMode) {
+  const topics = new Map();
+  numberedQuestions()
+    .filter((question) => question.mode === modeId)
+    .forEach((question) => {
+      if (!topics.has(question.topic)) {
+        topics.set(question.topic, {
+          id: question.topic,
+          name: question.topicName || question.category,
+          order: question.topicOrder || 999,
+        });
+      }
+    });
+  return [...topics.values()].sort((a, b) => a.order - b.order);
+}
+
+function questionsForMode(modeId = state.settings.activeMode, topicId = state.settings.activeTopic) {
+  return numberedQuestions().filter((question) => question.mode === modeId && question.topic === topicId);
 }
 
 function visibleModes() {
-  return modes.filter((mode) => questionsForMode(mode.id).length > 0);
+  return modes.filter((mode) => topicsForMode(mode.id).length > 0);
 }
 
 function currentQuestion() {
@@ -227,6 +262,27 @@ function currentQuestion() {
 
 function currentMode() {
   return modes.find((mode) => mode.id === state.settings.activeMode) || modes[0];
+}
+
+function currentTopic() {
+  return topicsForMode().find((topic) => topic.id === state.settings.activeTopic) || topicsForMode()[0] || null;
+}
+
+function ensureSelection() {
+  const availableModes = visibleModes();
+  if (!availableModes.some((mode) => mode.id === state.settings.activeMode)) {
+    state.settings.activeMode = availableModes[0]?.id || "friends";
+  }
+
+  const availableTopics = topicsForMode();
+  if (!availableTopics.some((topic) => topic.id === state.settings.activeTopic)) {
+    state.settings.activeTopic = availableTopics[0]?.id || "";
+  }
+
+  const availableQuestions = questionsForMode();
+  if (!availableQuestions.some((question) => question.id === state.currentQuestionId)) {
+    state.currentQuestionId = availableQuestions[0]?.id || null;
+  }
 }
 
 function populateSelect(select, options, value) {
@@ -245,6 +301,7 @@ function setQuestion(questionId) {
   if (!question) return;
   state.currentQuestionId = question.id;
   state.settings.activeMode = question.mode;
+  state.settings.activeTopic = question.topic;
   state.draft = draftForQuestion(question.id);
   saveState("已切換題目");
   render();
@@ -271,9 +328,11 @@ function completeRound() {
     partnerName: state.session.partnerName.trim(),
     mode: question.mode,
     questionId: question.id,
-    questionNumber: question.number,
+    questionNumber: question.numberLabel || question.number,
     questionText: question.text,
     category: question.category,
+    topic: question.topic,
+    sourceId: question.sourceId,
     notes: state.draft.notes.trim(),
     score: Number(state.draft.score) || 0,
     playStyle: "table-aid",
@@ -301,9 +360,11 @@ function saveDraft() {
 }
 
 function render() {
+  ensureSelection();
   renderVisualStyle();
   renderActiveView();
   renderModes();
+  renderTopics();
   renderQuestionNumberSelect();
   renderQuestion();
   renderDraft();
@@ -372,19 +433,41 @@ function renderModes() {
   dom.modeHint.textContent = `${currentMode().name} · ${currentMode().familiarity}`;
 }
 
+function renderTopics() {
+  const topics = topicsForMode();
+  populateSelect(
+    dom.topicSelect,
+    topics.map((topic) => ({ value: topic.id, label: topic.name })),
+    currentTopic()?.id || "",
+  );
+  dom.topicSelect.disabled = !topics.length;
+  dom.topicCount.textContent = `${questionsForMode().length} 題`;
+}
+
 function switchMode(modeId) {
   state.settings.activeMode = modeId;
-  const firstInMode = questionsForMode(modeId)[0];
-  state.currentQuestionId = firstInMode?.id || null;
-  state.draft = firstInMode ? draftForQuestion(firstInMode.id) : structuredClone(defaultState.draft);
+  const firstTopic = topicsForMode(modeId)[0];
+  state.settings.activeTopic = firstTopic?.id || "";
+  const firstQuestion = questionsForMode(modeId, state.settings.activeTopic)[0];
+  state.currentQuestionId = firstQuestion?.id || null;
+  state.draft = firstQuestion ? draftForQuestion(firstQuestion.id) : structuredClone(defaultState.draft);
   saveState("已切換模式");
+  render();
+}
+
+function switchTopic(topicId) {
+  state.settings.activeTopic = topicId;
+  const firstQuestion = questionsForMode()[0];
+  state.currentQuestionId = firstQuestion?.id || null;
+  state.draft = firstQuestion ? draftForQuestion(firstQuestion.id) : structuredClone(defaultState.draft);
+  saveState("已切換題目類型");
   render();
 }
 
 function renderQuestionNumberSelect() {
   const questions = questionsForMode();
   if (!questions.length) {
-    populateSelect(dom.questionNumberSelect, [{ value: "", label: "這個模式目前尚未開放題目" }], "");
+    populateSelect(dom.questionNumberSelect, [{ value: "", label: "這個關係與類型目前沒有題目" }], "");
     dom.questionNumberSelect.disabled = true;
     return;
   }
@@ -392,7 +475,7 @@ function renderQuestionNumberSelect() {
   dom.questionNumberSelect.disabled = false;
   const options = questions.map((question) => ({
     value: question.id,
-    label: `${String(question.number).padStart(2, "0")}｜${question.level || ""}｜${question.text.replace(/\s+/g, " ").slice(0, 30)}`,
+    label: `${question.numberLabel || String(question.number).padStart(3, "0")}｜${question.level || ""}｜${question.text.replace(/\s+/g, " ").slice(0, 34)}`,
   }));
   populateSelect(dom.questionNumberSelect, options, currentQuestion()?.id || options[0]?.value || "");
 }
@@ -400,9 +483,9 @@ function renderQuestionNumberSelect() {
 function renderQuestion() {
   const question = currentQuestion();
   const mode = question ? modes.find((item) => item.id === question.mode) : currentMode();
-  const numberText = question?.number ? `第 ${question.number} 題` : "題目";
+  const numberText = question?.numberLabel || (question?.number ? `第 ${question.number} 題` : "題目");
 
-  dom.currentMeta.textContent = question ? `${numberText} · ${mode?.name || "模式"} · ${question.category}` : "準備開始";
+  dom.currentMeta.textContent = question ? `${numberText} · ${mode?.name || "關係"} · ${question.category}` : "準備開始";
   dom.questionText.textContent = question ? question.text : "先選一題，開始面對面猜猜看。";
 }
 
@@ -434,7 +517,7 @@ function renderHistory() {
 
   state.rounds.slice(0, 20).forEach((round) => {
     const node = dom.historyItemTemplate.content.firstElementChild.cloneNode(true);
-    node.querySelector(".category-pill").textContent = `第 ${round.questionNumber || "?"} 題 · ${round.category}`;
+    node.querySelector(".category-pill").textContent = `${round.questionNumber || "?"} · ${round.category}`;
     node.querySelector("h3").textContent = round.questionText;
     node.querySelector("p").textContent = round.notes || "沒有補充評語。";
     const score = node.querySelector("strong");
@@ -489,6 +572,8 @@ function bindEvents() {
     saveState("已切換風格");
     render();
   });
+
+  dom.topicSelect.addEventListener("change", () => switchTopic(dom.topicSelect.value));
 
   dom.rulesBtn.addEventListener("click", () => {
     state.settings.activeView = state.settings.activeView === "rules" ? "game" : "rules";

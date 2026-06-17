@@ -46,6 +46,49 @@ const modes = [
   },
 ];
 
+const visualStyles = [
+  {
+    id: "cozy",
+    name: "溫馨桌遊",
+    heroArt: "https://api.iconify.design/fluent-emoji-flat:game-die.svg",
+    modeArt: {
+      friends: "https://api.iconify.design/fluent-emoji-flat:people-hugging.svg",
+      acquaintance: "https://api.iconify.design/fluent-emoji-flat:memo.svg",
+      couple: "https://api.iconify.design/fluent-emoji-flat:heart-hands.svg",
+    },
+  },
+  {
+    id: "party",
+    name: "朋友派對",
+    heroArt: "https://api.iconify.design/fluent-emoji-flat:party-popper.svg",
+    modeArt: {
+      friends: "https://api.iconify.design/fluent-emoji-flat:balloon.svg",
+      acquaintance: "https://api.iconify.design/fluent-emoji-flat:admission-tickets.svg",
+      couple: "https://api.iconify.design/fluent-emoji-flat:sparkles.svg",
+    },
+  },
+  {
+    id: "date",
+    name: "情侶約會",
+    heroArt: "https://api.iconify.design/fluent-emoji-flat:sparkling-heart.svg",
+    modeArt: {
+      friends: "https://api.iconify.design/fluent-emoji-flat:bouquet.svg",
+      acquaintance: "https://api.iconify.design/fluent-emoji-flat:love-letter.svg",
+      couple: "https://api.iconify.design/fluent-emoji-flat:heart-hands.svg",
+    },
+  },
+  {
+    id: "retro",
+    name: "復古題卡",
+    heroArt: "https://api.iconify.design/fluent-emoji-flat:artist-palette.svg",
+    modeArt: {
+      friends: "https://api.iconify.design/fluent-emoji-flat:game-die.svg",
+      acquaintance: "https://api.iconify.design/fluent-emoji-flat:memo.svg",
+      couple: "https://api.iconify.design/fluent-emoji-flat:wrapped-gift.svg",
+    },
+  },
+];
+
 const fallbackPacks = [
   {
     id: "fallback",
@@ -66,6 +109,7 @@ const fallbackPacks = [
 let questionLibrary = [];
 
 const dom = {
+  styleSelect: document.querySelector("#styleSelect"),
   rulesBtn: document.querySelector("#rulesBtn"),
   rulesPage: document.querySelector("#rulesPage"),
   gamePage: document.querySelector("#gamePage"),
@@ -73,6 +117,7 @@ const dom = {
   modeGrid: document.querySelector("#modeGrid"),
   rulesModeGrid: document.querySelector("#rulesModeGrid"),
   modeHint: document.querySelector("#modeHint"),
+  heroArt: document.querySelector(".hero-card-art"),
   exportBtn: document.querySelector("#exportBtn"),
   importFile: document.querySelector("#importFile"),
   completedCount: document.querySelector("#completedCount"),
@@ -104,6 +149,7 @@ const defaultState = {
   settings: {
     activeView: "game",
     activeMode: "friends",
+    visualStyle: "cozy",
   },
 };
 
@@ -141,12 +187,13 @@ function loadState() {
 
 function mergeState(saved) {
   const { favorites, ...savedState } = saved || {};
+  const { theme, ...savedSettings } = savedState.settings || {};
   return {
     ...structuredClone(defaultState),
     ...savedState,
     draft: { ...defaultState.draft, ...(savedState.draft || {}) },
     session: { ...defaultState.session, ...(savedState.session || {}) },
-    settings: { ...defaultState.settings, ...(savedState.settings || {}) },
+    settings: { ...defaultState.settings, ...savedSettings },
   };
 }
 
@@ -258,6 +305,7 @@ function saveDraft() {
 }
 
 function render() {
+  renderVisualStyle();
   renderActiveView();
   renderModes();
   renderQuestionNumberSelect();
@@ -265,6 +313,30 @@ function render() {
   renderDraft();
   renderStats();
   renderHistory();
+}
+
+function currentVisualStyle() {
+  return visualStyles.find((style) => style.id === state.settings.visualStyle) || visualStyles[0];
+}
+
+function modeArt(modeId) {
+  const style = currentVisualStyle();
+  return style.modeArt[modeId] || modes.find((mode) => mode.id === modeId)?.art || style.heroArt;
+}
+
+function renderVisualStyle() {
+  const style = currentVisualStyle();
+  state.settings.visualStyle = style.id;
+  document.body.dataset.style = style.id;
+  dom.heroArt.src = style.heroArt;
+  if (!dom.styleSelect.options.length) {
+    populateSelect(
+      dom.styleSelect,
+      visualStyles.map((item) => ({ value: item.id, label: item.name })),
+      style.id,
+    );
+  }
+  dom.styleSelect.value = style.id;
 }
 
 function renderActiveView() {
@@ -282,11 +354,12 @@ function renderModes() {
       node.classList.toggle("is-active", interactive && mode.id === state.settings.activeMode);
       if (!interactive) {
         const img = document.createElement("img");
-        img.src = mode.art;
         img.alt = "";
         img.className = "mode-card-art";
         node.append(img);
       }
+      const art = node.querySelector(".mode-card-art");
+      if (art) art.src = modeArt(mode.id);
       if (!interactive) {
         node.insertAdjacentHTML("beforeend", "<span></span><strong></strong><small></small><p></p>");
       }
@@ -416,6 +489,12 @@ function clearRounds() {
 }
 
 function bindEvents() {
+  dom.styleSelect.addEventListener("change", () => {
+    state.settings.visualStyle = dom.styleSelect.value;
+    saveState("已切換風格");
+    render();
+  });
+
   dom.rulesBtn.addEventListener("click", () => {
     state.settings.activeView = state.settings.activeView === "rules" ? "game" : "rules";
     saveState("已切換頁面");

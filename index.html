@@ -15,6 +15,10 @@
         </div>
 
         <div class="topbar-actions">
+          <label class="style-picker" for="styleSelect">
+            <span>風格</span>
+            <select id="styleSelect"></select>
+          </label>
           <button class="ghost-button" id="rulesBtn" type="button">玩法說明</button>
           <button class="ghost-button" id="exportBtn" type="button">匯出紀錄</button>
           <label class="ghost-button import-label" for="importFile">匯入紀錄</label>
@@ -137,6 +141,7 @@
 
     <template id="modeCardTemplate">
       <button class="mode-card" type="button">
+        <img class="mode-card-art" alt="" />
         <span></span>
         <strong></strong>
         <small></small>

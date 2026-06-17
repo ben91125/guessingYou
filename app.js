@@ -328,6 +328,10 @@ function isSameRecordedRound(round, questionId, partnerName = currentPartnerName
   return round.questionId === questionId && normalizePartnerName(round.partnerName) === partnerName;
 }
 
+function roundsForPartner(partnerName = currentPartnerName()) {
+  return state.rounds.filter((round) => normalizePartnerName(round.partnerName) === partnerName);
+}
+
 function draftForQuestion(questionId) {
   const existing = state.rounds.find((round) => isSameRecordedRound(round, questionId));
   if (!existing) return structuredClone(defaultState.draft);
@@ -525,7 +529,7 @@ function renderDraft() {
 }
 
 function renderStats() {
-  const completed = state.rounds.length;
+  const completed = roundsForPartner().length;
   dom.completedCount.textContent = completed;
 }
 

@@ -42,11 +42,12 @@ Codex 角色：
 ```text
 AI-edited: <summary>
 
-Model: GPT-5
-Reasoning: not exposed
+Model: GPT-5.5 (user-stated)
+Reasoning: high (user-stated)
 ```
 
-- 若環境未暴露模型或 reasoning，不要猜，寫 `not exposed`。
+- 目前使用者明確告知設定為 `GPT-5.5` 與 `high`，因此 commit message 使用 `(user-stated)` 標註。
+- 若未來使用者沒有明確告知，且環境未暴露模型或 reasoning，不要猜，寫 `not exposed`。
 - 若有產品或協作決策變更，同步更新 `README.md` / `HISTORY.md` / `AGENTS.md` 中相關內容。
 
 ## 目前重要 Branch

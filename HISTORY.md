@@ -317,3 +317,5 @@ GitHub Pages 部署方向：
 使用者詢問目前 `HISTORY.md` 是否足以讓另一台已安裝 Codex 的工作機接手專案。判斷是：`HISTORY.md` 對理解演進很有幫助，但仍不足以作為操作指南。
 
 因此新增 `AGENTS.md`，專門記錄跨 session / 跨機接手時需要知道的規則：使用者與 Codex 分工、禁止自行 push、commit message 格式、核心產品設定、`partnerName + questionId` 的紀錄 key、`SOURCE/` 暫不改小寫、sample / prototype 用途、部署方向與接手前檢查清單。
+
+使用者接著釐清目前 Codex 設定為 `GPT-5.5`、推理 `high`。由於執行環境本身未暴露可驗證欄位，commit message 改採 `Model: GPT-5.5 (user-stated)` 與 `Reasoning: high (user-stated)`，誠實區分使用者告知與環境自動暴露。

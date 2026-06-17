@@ -507,6 +507,13 @@ h1 {
   font-size: 1.05rem;
 }
 
+.history-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
 .game-board {
   display: block;
 }
@@ -594,6 +601,12 @@ h1 {
   align-items: center;
   gap: 10px;
   margin-bottom: 16px;
+}
+
+.session-input-group {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
 }
 
 .session-row label {
@@ -756,6 +769,24 @@ h1 {
   max-height: 370px;
   overflow: auto;
   padding-right: 4px;
+}
+
+.history-group {
+  display: grid;
+  gap: 10px;
+}
+
+.history-group > h3 {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-3), transparent 8%);
+  color: var(--brand-strong);
+  font-size: 0.86rem;
 }
 
 .question-item,
@@ -998,6 +1029,10 @@ h1 {
   .session-row {
     gap: 7px;
     margin-bottom: 12px;
+  }
+
+  .session-input-group {
+    grid-template-columns: 1fr;
   }
 
   .score-slider {

@@ -121,12 +121,15 @@ const dom = {
   questionText: document.querySelector("#questionText"),
   questionNumberSelect: document.querySelector("#questionNumberSelect"),
   partnerName: document.querySelector("#partnerName"),
+  partnerLockBtn: document.querySelector("#partnerLockBtn"),
   guessScore: document.querySelector("#guessScore"),
   guessScoreValue: document.querySelector("#guessScoreValue"),
   notes: document.querySelector("#notes"),
   saveStatus: document.querySelector("#saveStatus"),
   completeBtn: document.querySelector("#completeBtn"),
+  historyTitle: document.querySelector("#historyTitle"),
   historyList: document.querySelector("#historyList"),
+  toggleHistoryBtn: document.querySelector("#toggleHistoryBtn"),
   clearRoundsBtn: document.querySelector("#clearRoundsBtn"),
   modeCardTemplate: document.querySelector("#modeCardTemplate"),
   historyItemTemplate: document.querySelector("#historyItemTemplate"),
@@ -141,12 +144,14 @@ const defaultState = {
   },
   session: {
     partnerName: "",
+    partnerLocked: false,
   },
   settings: {
     activeView: "game",
     activeMode: "friends",
     activeTopic: "life_habits",
     visualStyle: "cozy",
+    historyCollapsed: false,
   },
 };
 
@@ -201,13 +206,17 @@ function loadState() {
 function mergeState(saved) {
   const { favorites, ...savedState } = saved || {};
   const { theme, ...savedSettings } = savedState.settings || {};
-  return {
+  const merged = {
     ...structuredClone(defaultState),
     ...savedState,
     draft: { ...defaultState.draft, ...(savedState.draft || {}) },
     session: { ...defaultState.session, ...(savedState.session || {}) },
     settings: { ...defaultState.settings, ...savedSettings },
   };
+  if (savedState.rounds?.length && savedState.session?.partnerLocked === undefined) {
+    merged.session.partnerLocked = true;
+  }
+  return merged;
 }
 
 function saveState(message = "已自動保存") {
@@ -347,6 +356,8 @@ function completeRound() {
     state.rounds.splice(existingIndex, 1);
   }
   state.rounds.unshift(nextRound);
+  state.session.partnerLocked = true;
+  state.settings.historyCollapsed = false;
 
   saveState("已留下評語");
   render();
@@ -493,6 +504,8 @@ function renderQuestion() {
 
 function renderDraft() {
   dom.partnerName.value = state.session.partnerName;
+  dom.partnerName.disabled = Boolean(state.session.partnerLocked);
+  dom.partnerLockBtn.textContent = dom.partnerName.disabled ? "解鎖" : "鎖定";
   dom.notes.value = state.draft.notes;
   dom.guessScore.value = state.draft.score;
   dom.guessScoreValue.textContent = state.draft.score;
@@ -505,8 +518,18 @@ function renderStats() {
 
 function renderHistory() {
   dom.historyList.innerHTML = "";
+  const partner = state.session.partnerName.trim();
+  const count = state.rounds.length;
+  const partnerCount = new Set(state.rounds.map((round) => round.partnerName || "未命名對象")).size;
+  const titlePartner = partnerCount > 1 ? `${partnerCount} 位對象` : partner || "未命名對象";
+  dom.historyTitle.textContent = count ? `評語紀錄：${titlePartner}（${count}）` : "評語紀錄（0）";
+  dom.toggleHistoryBtn.hidden = !count;
+  dom.clearRoundsBtn.hidden = !count;
+  dom.historyList.hidden = Boolean(count && state.settings.historyCollapsed);
+  dom.toggleHistoryBtn.textContent = state.settings.historyCollapsed ? `展開紀錄（${count}）` : "收合紀錄";
+  dom.toggleHistoryBtn.setAttribute("aria-expanded", String(!state.settings.historyCollapsed));
 
-  if (!state.rounds.length) {
+  if (!count) {
     const empty = document.createElement("p");
     empty.className = "empty-state";
     empty.textContent = "留下第一則評語後，這裡會變成你和對方的小小猜測紀錄本。";
@@ -514,19 +537,36 @@ function renderHistory() {
     return;
   }
 
-  const partner = state.session.partnerName.trim();
-  dom.historyTitle.textContent = partner ? `評語紀錄：${partner}` : "評語紀錄";
+  groupRoundsByPartner(state.rounds).forEach((group) => {
+    const groupNode = document.createElement("section");
+    groupNode.className = "history-group";
+    const heading = document.createElement("h3");
+    heading.textContent = `${group.partnerName}（${group.rounds.length}）`;
+    groupNode.append(heading);
 
-  state.rounds.slice(0, 20).forEach((round) => {
-    const node = dom.historyItemTemplate.content.firstElementChild.cloneNode(true);
-    node.querySelector(".category-pill").textContent = `${round.questionNumber || "?"} · ${round.category}`;
-    node.querySelector("h3").textContent = round.questionText;
-    node.querySelector("p").textContent = round.notes || "沒有補充評語。";
-    const score = node.querySelector("strong");
-    score.textContent = `${round.score ?? 0} 分`;
-    score.classList.toggle("is-miss", Number(round.score) < 60);
-    dom.historyList.append(node);
+    group.rounds.forEach((round) => {
+      const node = dom.historyItemTemplate.content.firstElementChild.cloneNode(true);
+      node.querySelector(".category-pill").textContent = `${round.questionNumber || "?"} · ${round.category}`;
+      node.querySelector("h3").textContent = round.questionText;
+      node.querySelector("p").textContent = round.notes || "沒有補充評語。";
+      const score = node.querySelector("strong");
+      score.textContent = `${round.score ?? 0} 分`;
+      score.classList.toggle("is-miss", Number(round.score) < 60);
+      groupNode.append(node);
+    });
+
+    dom.historyList.append(groupNode);
   });
+}
+
+function groupRoundsByPartner(rounds) {
+  const groups = new Map();
+  rounds.forEach((round) => {
+    const partnerName = round.partnerName || "未命名對象";
+    if (!groups.has(partnerName)) groups.set(partnerName, []);
+    groups.get(partnerName).push(round);
+  });
+  return [...groups.entries()].map(([partnerName, rounds]) => ({ partnerName, rounds }));
 }
 
 function exportJson() {
@@ -564,6 +604,8 @@ function importJson(event) {
 function clearRounds() {
   if (!confirm("確定要清除所有評語紀錄嗎？題庫會保留。")) return;
   state.rounds = [];
+  state.session.partnerLocked = false;
+  state.settings.historyCollapsed = false;
   saveState("評語紀錄已清除");
   render();
 }
@@ -585,10 +627,28 @@ function bindEvents() {
 
   dom.questionNumberSelect.addEventListener("change", () => setQuestion(dom.questionNumberSelect.value));
   dom.completeBtn.addEventListener("click", completeRound);
+  dom.toggleHistoryBtn.addEventListener("click", () => {
+    state.settings.historyCollapsed = !state.settings.historyCollapsed;
+    saveState(state.settings.historyCollapsed ? "評語紀錄已收合" : "評語紀錄已展開");
+    render();
+  });
   dom.clearRoundsBtn.addEventListener("click", clearRounds);
   dom.exportBtn.addEventListener("click", exportJson);
   dom.importFile.addEventListener("change", importJson);
   dom.partnerName.addEventListener("input", saveDraft);
+  dom.partnerLockBtn.addEventListener("click", () => {
+    if (state.session.partnerLocked) {
+      const ok = confirm("解鎖後可以修改這次遊戲對象名稱；已留下的舊紀錄仍會保留原本的對象名稱。確定要解鎖嗎？");
+      if (!ok) return;
+      state.session.partnerLocked = false;
+      saveState("已解鎖對象名稱");
+    } else {
+      state.session.partnerName = dom.partnerName.value;
+      state.session.partnerLocked = true;
+      saveState("已鎖定對象名稱");
+    }
+    render();
+  });
   dom.notes.addEventListener("input", saveDraft);
   dom.guessScore.addEventListener("input", () => {
     state.draft.score = Number(dom.guessScore.value);

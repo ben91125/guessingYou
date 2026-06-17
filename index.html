@@ -107,7 +107,10 @@
 
               <div class="session-row">
                 <label for="partnerName">這次和誰玩</label>
-                <input id="partnerName" type="text" maxlength="24" placeholder="例如：阿災、同學 A、另一半" />
+                <div class="session-input-group">
+                  <input id="partnerName" type="text" maxlength="24" placeholder="例如：阿災、同學 A、另一半" />
+                  <button class="tiny-button" id="partnerLockBtn" type="button">鎖定</button>
+                </div>
               </div>
 
               <div class="round-tools">
@@ -132,7 +135,10 @@
             <article class="tool-panel wide-panel">
               <div class="section-head">
                 <h2 id="historyTitle">評語紀錄</h2>
-                <button class="danger-button" id="clearRoundsBtn" type="button">清除紀錄</button>
+                <div class="history-actions">
+                  <button class="ghost-button" id="toggleHistoryBtn" type="button" aria-expanded="true">收合紀錄</button>
+                  <button class="danger-button" id="clearRoundsBtn" type="button">清除全部紀錄</button>
+                </div>
               </div>
               <div class="history-list" id="historyList"></div>
             </article>

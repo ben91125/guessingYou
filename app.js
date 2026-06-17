@@ -575,14 +575,24 @@ function renderHistory() {
   });
 }
 
-function groupRoundsByPartner(rounds) {
+function groupRoundsByPartner(rounds, preferredPartnerName = currentPartnerName()) {
   const groups = new Map();
   rounds.forEach((round) => {
     const partnerName = normalizePartnerName(round.partnerName) || "未命名對象";
     if (!groups.has(partnerName)) groups.set(partnerName, []);
     groups.get(partnerName).push(round);
   });
-  return [...groups.entries()].map(([partnerName, rounds]) => ({ partnerName, rounds }));
+  const preferredName = normalizePartnerName(preferredPartnerName);
+  return [...groups.entries()]
+    .map(([partnerName, rounds], order) => ({ partnerName, rounds, order }))
+    .sort((a, b) => {
+      if (preferredName) {
+        if (a.partnerName === preferredName) return -1;
+        if (b.partnerName === preferredName) return 1;
+      }
+      return a.order - b.order;
+    })
+    .map(({ partnerName, rounds }) => ({ partnerName, rounds }));
 }
 
 function exportJson() {

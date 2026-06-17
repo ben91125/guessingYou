@@ -17,24 +17,6 @@
   --radius: 8px;
 }
 
-body.dark {
-  color-scheme: dark;
-  --bg: #25211e;
-  --surface: #322d28;
-  --surface-2: #3e352f;
-  --surface-3: #30433b;
-  --text: #fff8ee;
-  --muted: #d8c7b7;
-  --line: #5b5047;
-  --brand: #91c8bd;
-  --brand-strong: #b8eee5;
-  --accent: #f0a094;
-  --gold: #f1cd7a;
-  --green: #9bd3a6;
-  --danger: #ec8b84;
-  --shadow: 0 22px 48px rgba(0, 0, 0, 0.28);
-}
-
 * {
   box-sizing: border-box;
 }
@@ -58,6 +40,7 @@ textarea {
 }
 
 button,
+input,
 select,
 textarea,
 .import-label {
@@ -85,12 +68,18 @@ button:active,
   transform: translateY(0);
 }
 
+input[type="text"],
 select,
 textarea {
   width: 100%;
   border: 1px solid var(--line);
   background: var(--surface);
   color: var(--text);
+}
+
+input[type="text"] {
+  min-height: 42px;
+  padding: 0 12px;
 }
 
 select {
@@ -120,9 +109,9 @@ h1 {
 }
 
 .app-shell {
-  width: min(1120px, calc(100% - 32px));
+  width: min(1280px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 18px 0 42px;
+  padding: 24px 0 52px;
 }
 
 .topbar,
@@ -172,16 +161,6 @@ h1 {
   justify-content: flex-end;
   gap: 8px;
   flex-wrap: wrap;
-}
-
-.icon-button {
-  width: 42px;
-  padding: 0;
-  display: inline-grid;
-  place-items: center;
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--line);
 }
 
 .ghost-button,
@@ -261,9 +240,9 @@ h1 {
 .rules-hero {
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
+  gap: 28px;
   margin-bottom: 14px;
-  padding: 20px;
+  padding: 26px 28px;
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--surface-2), transparent 4%), transparent),
     var(--surface);
@@ -316,16 +295,16 @@ h1 {
 }
 
 .mode-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 
 .mode-card {
-  min-height: 136px;
+  min-height: 144px;
   display: grid;
   align-content: start;
   gap: 6px;
-  padding: 14px;
+  padding: 16px;
   text-align: left;
   background: rgba(255, 253, 248, 0.78);
   color: var(--text);
@@ -376,7 +355,7 @@ h1 {
 }
 
 .rules-grid {
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   margin-top: 16px;
 }
 
@@ -421,11 +400,11 @@ h1 {
 
 .game-board {
   align-items: stretch;
-  gap: 14px;
+  gap: 16px;
 }
 
 .score-strip {
-  width: 148px;
+  width: 150px;
   display: grid;
   gap: 8px;
   align-content: start;
@@ -449,7 +428,7 @@ h1 {
   position: relative;
   flex: 1;
   overflow: hidden;
-  padding: 24px;
+  padding: 28px;
   background:
     linear-gradient(180deg, rgba(255, 253, 248, 0.96), rgba(255, 247, 238, 0.96)),
     var(--surface);
@@ -486,9 +465,11 @@ h1 {
 }
 
 .draw-row {
-  align-items: end;
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  align-items: center;
   gap: 10px;
-  margin: 18px 0 10px;
+  margin: 20px 0 12px;
 }
 
 .secondary-filter-row {
@@ -499,7 +480,20 @@ h1 {
 
 .draw-row label {
   min-width: 72px;
-  padding-bottom: 12px;
+}
+
+.session-row {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 280px);
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.session-row label {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
 }
 
 .face-flow-card {
@@ -740,6 +734,16 @@ h1 {
   }
 }
 
+@media (max-width: 1180px) {
+  .app-shell {
+    width: min(100% - 36px, 1120px);
+  }
+
+  .rules-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 980px) {
   .game-board,
   .topbar {
@@ -753,7 +757,6 @@ h1 {
 
   .score-strip {
     width: 100%;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .mode-grid,
@@ -768,8 +771,26 @@ h1 {
     padding-top: 14px;
   }
 
+  h1 {
+    font-size: 2.35rem;
+  }
+
+  .topbar {
+    gap: 10px;
+  }
+
+  .topbar-actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .topbar-actions > * {
+    width: 100%;
+  }
+
   .rules-hero,
   .draw-row,
+  .session-row,
   .round-tools,
   .commit-row,
   .play-card-head,
@@ -784,6 +805,49 @@ h1 {
   .rules-grid,
   .bias-preview {
     grid-template-columns: 1fr;
+  }
+
+  .rules-hero {
+    padding: 16px;
+  }
+
+  .rules-hero h2 {
+    margin-top: 8px;
+    font-size: 1.45rem;
+  }
+
+  .hero-card-art {
+    width: 112px;
+    min-width: 112px;
+    align-self: center;
+    box-shadow: none;
+  }
+
+  .rules-page .mode-grid {
+    gap: 10px;
+  }
+
+  .rules-page .mode-info-card {
+    min-height: 0;
+    grid-template-columns: 60px 1fr;
+    gap: 4px 12px;
+    padding: 13px;
+  }
+
+  .rules-page .mode-info-card .mode-card-art {
+    grid-row: 1 / 5;
+    width: 52px;
+    height: 52px;
+    margin: 0;
+    align-self: center;
+  }
+
+  .rules-grid article {
+    min-height: 132px;
+  }
+
+  .rules-grid strong {
+    margin-bottom: 12px;
   }
 
   .draw-row label {

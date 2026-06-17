@@ -66,8 +66,6 @@ const fallbackPacks = [
 let questionLibrary = [];
 
 const dom = {
-  themeToggle: document.querySelector("#themeToggle"),
-  themeIcon: document.querySelector("#themeIcon"),
   rulesBtn: document.querySelector("#rulesBtn"),
   rulesPage: document.querySelector("#rulesPage"),
   gamePage: document.querySelector("#gamePage"),
@@ -106,7 +104,6 @@ const defaultState = {
   settings: {
     activeView: "game",
     activeMode: "friends",
-    theme: "light",
   },
 };
 
@@ -158,7 +155,7 @@ function saveState(message = "已自動保存") {
   dom.saveStatus.textContent = message;
   window.clearTimeout(saveState.statusTimer);
   saveState.statusTimer = window.setTimeout(() => {
-    dom.saveStatus.textContent = "localStorage 自動保存中";
+    dom.saveStatus.textContent = "自動保存中";
   }, 1400);
 }
 
@@ -261,7 +258,6 @@ function saveDraft() {
 }
 
 function render() {
-  renderTheme();
   renderActiveView();
   renderModes();
   renderQuestionNumberSelect();
@@ -269,11 +265,6 @@ function render() {
   renderDraft();
   renderStats();
   renderHistory();
-}
-
-function renderTheme() {
-  document.body.classList.toggle("dark", state.settings.theme === "dark");
-  dom.themeIcon.textContent = state.settings.theme === "dark" ? "☀" : "◐";
 }
 
 function renderActiveView() {
@@ -425,12 +416,6 @@ function clearRounds() {
 }
 
 function bindEvents() {
-  dom.themeToggle.addEventListener("click", () => {
-    state.settings.theme = state.settings.theme === "dark" ? "light" : "dark";
-    saveState("已切換主題");
-    renderTheme();
-  });
-
   dom.rulesBtn.addEventListener("click", () => {
     state.settings.activeView = state.settings.activeView === "rules" ? "game" : "rules";
     saveState("已切換頁面");

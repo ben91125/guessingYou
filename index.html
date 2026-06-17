@@ -16,9 +16,6 @@
 
         <div class="topbar-actions">
           <button class="ghost-button" id="rulesBtn" type="button">玩法說明</button>
-          <button class="icon-button" id="themeToggle" type="button" aria-label="切換深色模式" title="切換深色模式">
-            <span id="themeIcon" aria-hidden="true">◐</span>
-          </button>
           <button class="ghost-button" id="exportBtn" type="button">匯出紀錄</button>
           <label class="ghost-button import-label" for="importFile">匯入紀錄</label>
           <input id="importFile" type="file" accept="application/json" hidden />
@@ -119,7 +116,7 @@
               <textarea id="notes" rows="4" placeholder="例如：你猜到我很在意這件事，但完全猜錯原因。"></textarea>
 
               <div class="commit-row">
-                <p id="saveStatus" role="status">localStorage 自動保存中</p>
+                <p id="saveStatus" role="status">自動保存中</p>
                 <button class="primary-button" id="completeBtn" type="button">留下評語</button>
               </div>
             </section>
